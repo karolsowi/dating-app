@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+    <h2 class="mb-4">Your Matches</h2>
+    <div class="row">
+        <div *ngFor="let match of matches" class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm match-card" [routerLink]="['/messages', match.otherUser.id]">
+                <img [src]="match.otherUser.profilePic || 'https://via.placeholder.com/200x200?text=User'"
+                    class="card-img-top" alt="Profile">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ match.otherUser.name }}</h5>
+                    <p class="card-text text-muted">Matched on {{ match.timestamp | date }}</p>
+                    <button class="btn btn-primary btn-sm">Chat</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="matches.length === 0" class="col-12 text-center text-muted mt-5">
+            <h4>No matches yet. Keep swiping!</h4>
+        </div>
+    </div>
+</div>

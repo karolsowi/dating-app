@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+*.log
+# Server
+server/data/db.json
+!server/data/db.json.example
+
+# Angular
+client/dist
+client/node_modules
+client/.angular

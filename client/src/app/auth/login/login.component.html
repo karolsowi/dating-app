@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4 text-primary">Login to Grinding</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" formControlName="email" 
+                     [ngClass]="{ 'is-invalid': loginForm.get('email')?.touched && loginForm.get('email')?.invalid }">
+              <div class="invalid-feedback">
+                Please enter a valid email.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" formControlName="password"
+                     [ngClass]="{ 'is-invalid': loginForm.get('password')?.touched && loginForm.get('password')?.invalid }">
+              <div class="invalid-feedback">
+                Password is required.
+              </div>
+            </div>
+            <div *ngIf="error" class="alert alert-danger">
+              {{ error }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100 btn-lg" [disabled]="loginForm.invalid">Login</button>
+          </form>
+          <div class="mt-3 text-center">
+            <p>Don't have an account? <a routerLink="/auth/register">Register here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
