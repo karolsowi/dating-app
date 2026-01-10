@@ -7,7 +7,7 @@ const readDb = () => JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
 const writeDb = (data) => fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
 
 exports.register = (req, res) => {
-    const { email, password, name } = req.body;
+    const { name, email, password, dob, userGender, partnerGender } = req.body;
     const db = readDb();
 
     if (db.users.find(u => u.email === email)) {
@@ -16,14 +16,12 @@ exports.register = (req, res) => {
 
     const newUser = {
         id: Date.now().toString(),
+        name,
         email,
         password, // In a real app, hash this!
-        name,
-        profilePic: '',
-        bio: '',
-        age: 18,
-        gender: '',
-        lookingFor: ''
+        dob,
+        userGender,
+        partnerGender
     };
 
     db.users.push(newUser);
