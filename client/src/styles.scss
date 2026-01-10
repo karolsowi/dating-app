@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import 'bootstrap/dist/css/bootstrap.min.css'; */
+$primary:   #fc8200;
+$secondary: #6c757d;
+$success:   #198754;
+$info:      #0dcaf0;
+$warning:   #ffc107;
+$danger:    #dc3545;
+$light:     #ffffff;
+$dark:      #212529;
+@import "bootstrap/scss/bootstrap";
+
+body {
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
