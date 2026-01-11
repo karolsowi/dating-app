@@ -1,97 +1,133 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <h2 class="text-center my-4 text-primary">Join Grinding</h2>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="mb-3 row">
-                    <label for="name" class=" col-3 text-end form-label">Full Name</label>
-                    <div class="col-9">
-                        <input type="text" class="form-control" id="name" formControlName="name"
-                            [ngClass]="{ 'is-invalid': registerForm.get('name')?.touched && registerForm.get('name')?.invalid }">
-                        <div class="invalid-feedback">
-                            Name is required.
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="email" class="col-3 text-end form-label">Email address</label>
-                    <div class="col-9">
-                        <input type="email" class="form-control" id="email" formControlName="email"
-                            [ngClass]="{ 'is-invalid': registerForm.get('email')?.touched && registerForm.get('email')?.invalid }">
-                        <div class="invalid-feedback">
-                            Please enter a valid email.
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="password" class="col-3 text-end form-label">Password</label>
-                    <div class="col-9">
-                        <input type="password" class="form-control" id="password" formControlName="password"
-                            [ngClass]="{ 'is-invalid': registerForm.get('password')?.touched && registerForm.get('password')?.invalid }">
-                        <div class="invalid-feedback">
-                            Password must be at least 6 characters.
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="confirm-password" class="col-3 text-end form-label">Confirm password</label>
-                    <div class="col-9">
-                        <input type="password" class="form-control" id="confirm-password" formControlName="confirmPassword"
-                            [ngClass]="{ 'is-invalid': (registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched) }">
-                        <div class="invalid-feedback">
-                            Passwords must match.
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="dob" class="col-3 text-end form-label">Date of birth</label>
-                    <div class="col-3">
-                        <input type="date" class="form-control" id="dob" formControlName="dob" [max]="maxDob">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="user-gender" class="col-3 text-end form-label">I'm a</label>
-                    <div class="col-2">
-                        <select class="form-control" id="user-gender" formControlName="userGender">
-                            <option hidden value="">Select</option>
-                            <option value="woman">Woman</option>
-                            <option value="man">Man</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <label for="partner-gender" class="col-3 text-center form-label">interested in</label>
-                    <div class="col-4">
-                        <div class="dropdown">
-                            <button class="btn btn-light border w-100 text-start" type="button" data-bs-toggle="dropdown">
-                                {{ registerForm.get('partnerGender')?.value?.length ? getPartnerGenderLabels() : 'Select' }}
-                            </button>
-
-                            <ul class="dropdown-menu p-2" style="width: 100%">
-                                <li *ngFor="let opt of partnerGenderOptions">
-                                    <label class="dropdown-item" #lbl>
-                                    <input type="checkbox"
-                                            [value]="opt.value"
-                                            (change)="onMultiSelectChange($event, 'partnerGender', lbl)">
-                                    {{ opt.label }}
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="error" class="alert alert-danger">
-                    {{ error }}
-                </div>
-                <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-lg col-3 mt-4"
-                        [disabled]="registerForm.invalid">
-                        Register
-                    </button>
-                </div>
-            </form>
-            <div class="mt-3 text-center">
-                <p>Already have an account? <a routerLink="/auth/login">Login here!</a></p>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <h2 class="text-center my-4 text-primary">Join Grinding</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3 row">
+          <label for="name" class="col-3 text-end form-label">Full Name</label>
+          <div class="col-9">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': registerForm.get('name')?.touched && registerForm.get('name')?.invalid
+              }"
+            />
+            <div class="invalid-feedback">Name is required.</div>
+          </div>
         </div>
+        <div class="mb-3 row">
+          <label for="email" class="col-3 text-end form-label">Email address</label>
+          <div class="col-9">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('email')?.touched && registerForm.get('email')?.invalid
+              }"
+            />
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-3 text-end form-label">Password</label>
+          <div class="col-9">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.get('password')?.touched && registerForm.get('password')?.invalid
+              }"
+            />
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="confirm-password" class="col-3 text-end form-label">Confirm password</label>
+          <div class="col-9">
+            <input
+              type="password"
+              class="form-control"
+              id="confirm-password"
+              formControlName="confirmPassword"
+              [ngClass]="{
+                'is-invalid':
+                  registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched
+              }"
+            />
+            <div class="invalid-feedback">Passwords must match.</div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="dob" class="col-3 text-end form-label">Date of birth</label>
+          <div class="col-3">
+            <input type="date" class="form-control" id="dob" formControlName="dob" [max]="maxDob" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="user-gender" class="col-3 text-end form-label">I'm a</label>
+          <div class="col-2">
+            <select class="form-control" id="user-gender" formControlName="userGender">
+              <option hidden value="">Select</option>
+              <option value="woman">Woman</option>
+              <option value="man">Man</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <label for="partner-gender" class="col-3 text-center form-label">interested in</label>
+          <div class="col-4">
+            <div class="dropdown">
+              <button
+                class="btn btn-light border w-100 text-start"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                {{
+                  registerForm.get('partnerGender')?.value?.length
+                    ? getPartnerGenderLabels()
+                    : 'Select'
+                }}
+              </button>
+
+              <ul class="dropdown-menu p-2" style="width: 100%">
+                <li *ngFor="let opt of partnerGenderOptions">
+                  <label class="dropdown-item" #lbl>
+                    <input
+                      type="checkbox"
+                      [value]="opt.value"
+                      (change)="onMultiSelectChange($event, 'partnerGender', lbl)"
+                    />
+                    {{ opt.label }}
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+        <div class="row justify-content-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg col-3 mt-4"
+            [disabled]="registerForm.invalid"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+      <div class="mt-3 text-center">
+        <p>Already have an account? <a routerLink="/auth/login">Login here!</a></p>
+      </div>
     </div>
+  </div>
 </div>
