@@ -45,8 +45,8 @@ export class RegisterComponent {
     }
 
     partnerGenderOptions = [
-        { value: 'women', label: 'Women' },
-        { value: 'men', label: 'Men' },
+        { value: 'woman', label: 'Women' },
+        { value: 'man', label: 'Men' },
         { value: 'other', label: 'Other' }
     ];
 

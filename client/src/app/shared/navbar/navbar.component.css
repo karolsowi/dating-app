@@ -1,0 +1,6 @@
+/* Prevent logout item from turning primary on click */
+.dropdown-item.text-danger:active,
+.dropdown-item.text-danger:focus,
+.dropdown-item.text-danger:hover {
+  background-color: rgba(255, 0, 0, 0.08);
+}
