@@ -1,16 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-
-const DB_FILE = path.join(__dirname, '..', 'data', 'db.json');
-
-const readDb = () => JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-const writeDb = (data) => fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
-
 exports.register = (req, res) => {
     const { name, email, password, dob, userGender, partnerGender } = req.body;
-    const db = readDb();
+    const { readData, writeData, files } = req.app.locals;
 
-    if (db.users.find(u => u.email === email)) {
+    const users = readData(files.users);
+
+    if (users.find(u => u.email === email)) {
         return res.status(400).json({ message: 'User already exists' });
     }
 
@@ -24,17 +18,19 @@ exports.register = (req, res) => {
         partnerGender
     };
 
-    db.users.push(newUser);
-    writeDb(db);
+    users.push(newUser);
+    writeData(files.users, users);
 
     res.status(201).json({ message: 'User registered successfully', user: newUser });
 };
 
 exports.login = (req, res) => {
     const { email, password } = req.body;
-    const db = readDb();
+    const { readData, files } = req.app.locals;
 
-    const user = db.users.find(u => u.email === email && u.password === password);
+    const users = readData(files.users);
+
+    const user = users.find(u => u.email === email && u.password === password);
 
     if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });

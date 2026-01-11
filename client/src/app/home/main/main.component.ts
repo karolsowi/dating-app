@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { MatchService } from '../../services/match.service';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
@@ -15,12 +16,45 @@ export class MainComponent implements OnInit {
     users: any[] = [];
     currentIndex = 0;
     matchMessage = '';
+    isLoading = false;
 
-    constructor(private userService: UserService, private matchService: MatchService) { }
+    constructor(
+        private userService: UserService,
+        private matchService: MatchService,
+        private authService: AuthService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
     ngOnInit(): void {
-        this.userService.getUsers().subscribe(users => {
-            this.users = users;
+        this.authService.currentUser$.subscribe((user: any) => {
+            if (user) {
+                this.loadUsers();
+            }
+        });
+    }
+
+    loadUsers() {
+        // Ensure we have a valid current user before fetching
+        const currentUser = this.userService.getCurrentUser();
+        if (!currentUser || !currentUser.id) {
+            console.warn('No legitimate current user found in UserService, skipping fetch.');
+            return;
+        }
+
+        this.isLoading = true;
+        this.cdr.detectChanges(); // Force update helper
+        this.userService.getUsers().subscribe({
+            next: (users) => {
+                this.users = users;
+                this.isLoading = false;
+                console.log('MainComponent loaded users:', users.length);
+                this.cdr.detectChanges(); // Ensure UI updates
+            },
+            error: (err) => {
+                console.error('Failed to load users', err);
+                this.isLoading = false;
+                this.cdr.detectChanges();
+            }
         });
     }
 
@@ -41,10 +75,15 @@ export class MainComponent implements OnInit {
     }
 
     dislike() {
-        this.nextUser();
+        if (!this.currentUser) return;
+
+        this.matchService.passUser(this.currentUser.id).subscribe(() => {
+            this.nextUser();
+        });
     }
 
     nextUser() {
         this.currentIndex++;
+        this.cdr.detectChanges();
     }
 }

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "1",
+    "email": "alice@example.com",
+    "password": "password123",
+    "name": "Alice",
+    "profilePic": "https://randomuser.me/api/portraits/women/44.jpg",
+    "bio": "Love hiking and coffee.",
+    "age": 24,
+    "gender": "female",
+    "lookingFor": "male"
+  },
+  {
+    "id": "2",
+    "email": "bob@example.com",
+    "password": "password123",
+    "name": "Bob",
+    "profilePic": "https://randomuser.me/api/portraits/men/32.jpg",
+    "bio": "Tech enthusiast and gamer.",
+    "age": 28,
+    "gender": "male",
+    "lookingFor": "female"
+  },
+  {
+    "id": "3",
+    "email": "charlie@example.com",
+    "password": "password123",
+    "name": "Charlie",
+    "profilePic": "https://randomuser.me/api/portraits/men/45.jpg",
+    "bio": "Music lover. I play guitar.",
+    "age": 30,
+    "gender": "male",
+    "lookingFor": "female"
+  },
+  {
+    "id": "4",
+    "email": "diana@example.com",
+    "password": "password123",
+    "name": "Diana",
+    "profilePic": "https://randomuser.me/api/portraits/women/68.jpg",
+    "bio": "Travel addict. Been to 15 countries.",
+    "age": 26,
+    "gender": "female",
+    "lookingFor": "male"
+  },
+  {
+    "id": "5",
+    "email": "eve@example.com",
+    "password": "password123",
+    "name": "Eve",
+    "profilePic": "https://randomuser.me/api/portraits/women/90.jpg",
+    "bio": "Art student. Creative spirit.",
+    "age": 22,
+    "gender": "female",
+    "lookingFor": "everyone"
+  },
+  {
+    "id": "emrata",
+    "email": "emily@example.com",
+    "password": "password123",
+    "name": "Emily Ratajkowski",
+    "profilePic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT1DBDLyEQWXty_kfGtg1HxjuD7-NirJ1nZQ&s",
+    "bio": "Model, actress, writer. I wrote a book called 'My Body'.",
+    "age": 32,
+    "gender": "female",
+    "lookingFor": "everyone"
+  },
+  {
+    "id": "brad",
+    "email": "brad@example.com",
+    "password": "password123",
+    "name": "Brad Pitt",
+    "profilePic": "https://www.fit.pl/img/2012/07/_max/brad.jpg",
+    "bio": "Just a guy who likes architecture and making movies.",
+    "age": 60,
+    "gender": "male",
+    "lookingFor": "female"
+  },
+  {
+    "id": "1768150747738",
+    "name": "New Girl",
+    "email": "newgirl981@example.com",
+    "password": "password123",
+    "dob": "1995-01-01",
+    "userGender": "woman",
+    "partnerGender": [
+      "men"
+    ]
+  },
+  {
+    "id": "1768151106772",
+    "name": "New Man",
+    "email": "newman981@example.com",
+    "password": "password123",
+    "dob": "1995-01-01",
+    "userGender": "man",
+    "partnerGender": [
+      "women"
+    ]
+  }
+]

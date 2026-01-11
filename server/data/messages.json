@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1768044274317",
+    "fromUserId": "4",
+    "toUserId": "2",
+    "content": "hello bob",
+    "timestamp": "2026-01-10T11:24:34.317Z"
+  },
+  {
+    "id": "1768044284689",
+    "fromUserId": "4",
+    "toUserId": "2",
+    "content": "wants boobs",
+    "timestamp": "2026-01-10T11:24:44.689Z"
+  },
+  {
+    "id": "1768044364296",
+    "fromUserId": "2",
+    "toUserId": "4",
+    "content": "yes",
+    "timestamp": "2026-01-10T11:26:04.296Z"
+  }
+]
