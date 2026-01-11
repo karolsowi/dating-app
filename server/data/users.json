@@ -84,7 +84,7 @@
     "dob": "1995-01-01",
     "userGender": "woman",
     "partnerGender": [
-      "men"
+      "man"
     ]
   },
   {
@@ -95,7 +95,7 @@
     "dob": "1995-01-01",
     "userGender": "man",
     "partnerGender": [
-      "women"
+      "woman"
     ]
   }
 ]

@@ -1,24 +1,75 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-primary" routerLink="/home">Grinding</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto" *ngIf="authService.currentUser$ | async">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/home" routerLinkActive="active">Swipe</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/matches" routerLinkActive="active">Matches</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-danger" href="javascript:void(0)" (click)="logout()">Logout</a>
-                </li>
-            </ul>
+<nav class="navbar navbar-expand-lg bg-primary-subtle shadow-sm mb-4">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/home">
+      <img src="/logo.png" alt="Grinding Logo" height="40" />
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNav"
+      *ngIf="authService.currentUser$ | async as user"
+    >
+      <!-- LEFT SIDE -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Match</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/matches" routerLinkActive="active">Chat</a>
+        </li>
+      </ul>
+
+      <!-- RIGHT SIDE -->
+      <div class="d-flex align-items-center gap-3">
+        <div class="dropdown">
+          <span
+            class="fw-semibold dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="cursor: pointer"
+          >
+            Hi, {{ user.name }}!
+          </span>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button
+                class="dropdown-item text-danger d-flex align-items-center gap-2"
+                (click)="authService.logout()"
+              >
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
+            </li>
+          </ul>
         </div>
+
+        <img
+          [src]="user.photoUrl || 'placeholder-profile.png'"
+          alt="Profile"
+          class="rounded"
+          style="width: 36px; height: 36px; object-fit: cover"
+        />
+
+        <a routerLink="/settings" class="text-dark fs-5">
+          <i class="bi bi-gear"></i>
+        </a>
+
+        <button class="btn p-0 border-0 bg-transparent fs-5">
+          <i class="bi bi-bell"></i>
+        </button>
+      </div>
     </div>
+  </div>
 </nav>
