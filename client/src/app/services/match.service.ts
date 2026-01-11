@@ -16,6 +16,11 @@ export class MatchService {
         return this.http.post(`${this.apiUrl}/like`, { fromUserId, toUserId });
     }
 
+    passUser(toUserId: string): Observable<any> {
+        const fromUserId = this.authService.currentUserValue?.id;
+        return this.http.post(`${this.apiUrl}/pass`, { fromUserId, toUserId });
+    }
+
     getMatches(): Observable<any[]> {
         const userId = this.authService.currentUserValue?.id;
         return this.http.get<any[]>(`${this.apiUrl}/${userId}`);

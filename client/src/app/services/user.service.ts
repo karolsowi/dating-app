@@ -11,6 +11,10 @@ export class UserService {
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
+    getCurrentUser(): any {
+        return this.authService.currentUserValue;
+    }
+
     getUsers(): Observable<any[]> {
         const currentUserId = this.authService.currentUserValue?.id;
         return this.http.get<any[]>(`${this.apiUrl}?currentUserId=${currentUserId}`);
