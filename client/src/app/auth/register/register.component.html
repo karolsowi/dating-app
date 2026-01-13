@@ -1,43 +1,46 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-7">
+    <div class="col-8">
       <div class="text-center my-4">
-        <img src="/logo.png" alt="Grinding Logo" style="max-width: 300px; height: auto;" class="mb-2">
+        <img src="/logo.png" alt="Grinding Logo" style="max-width: 300px; height: auto; margin-left: -40px;" class="mb-2">
         <h3 class="text-primary">Sign up</h3>
       </div>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form class="pr-5" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="mb-3 row justify-content-center">
           <label for="name" class="col-3 text-end col-form-label">Full Name</label>
-          <div class="col-7">
+          <div class="col-6">
             <input type="text" class="form-control" id="name" formControlName="name" [ngClass]="{
                 'is-invalid': registerForm.get('name')?.touched && registerForm.get('name')?.invalid
               }" />
             <div class="invalid-feedback">Name is required.</div>
           </div>
+          <div class="col-3"></div>
         </div>
         <div class="mb-3 row justify-content-center">
           <label for="email" class="col-3 text-end col-form-label">Email address</label>
-          <div class="col-7">
+          <div class="col-6">
             <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{
                 'is-invalid':
                   registerForm.get('email')?.touched && registerForm.get('email')?.invalid
               }" />
             <div class="invalid-feedback">Please enter a valid email.</div>
           </div>
+          <div class="col-3"></div>
         </div>
         <div class="mb-3 row justify-content-center">
           <label for="password" class="col-3 text-end col-form-label">Password</label>
-          <div class="col-7">
+          <div class="col-6">
             <input type="password" class="form-control" id="password" formControlName="password" [ngClass]="{
                 'is-invalid':
                   registerForm.get('password')?.touched && registerForm.get('password')?.invalid
               }" />
             <div class="invalid-feedback">Password must be at least 6 characters.</div>
           </div>
+          <div class="col-3"></div>
         </div>
         <div class="mb-3 row justify-content-center">
           <label for="confirm-password" class="col-3 text-end col-form-label">Confirm password</label>
-          <div class="col-7">
+          <div class="col-6">
             <input type="password" class="form-control" id="confirm-password" formControlName="confirmPassword"
               [ngClass]="{
                 'is-invalid':
@@ -45,28 +48,30 @@
               }" />
             <div class="invalid-feedback">Passwords must match.</div>
           </div>
+          <div class="col-3"></div>
         </div>
         <div class="mb-3 row justify-content-center">
           <label for="dob" class="col-3 text-end col-form-label">Date of birth</label>
-          <div class="col-7">
+          <div class="col-6">
             <!-- Changed from col-3 to match others to keep alignment, or use col-3 but justify-content-center makes it weird if not consistent. Let's start with col-3 if it's just date, but keeping width consistent with others looks better. User said 'centered', 'one box'. Using col-7 for input wrapper makes it match above inputs -->
             <input type="date" class="form-control" id="dob" formControlName="dob" [max]="maxDob" />
           </div>
+          <div class="col-3"></div>
         </div>
-        <div class="mb-3 row justify-content-center align-items-center">
-          <label for="user-gender" class="col-auto col-form-label">I'm a</label>
-          <div class="col-auto">
-            <select class="form-control" id="user-gender" formControlName="userGender" style="width: auto;">
+        <div class="mb-3 row justify-content-center align-items-top">
+          <label for="user-gender" class="col-3 text-end col-form-label">I'm a</label>
+          <div class="col-2">
+            <select class="form-control" id="user-gender" formControlName="userGender">
               <option hidden value="">Select</option>
               <option value="woman">Woman</option>
               <option value="man">Man</option>
               <option value="other">Other</option>
             </select>
           </div>
-          <label for="partner-gender" class="col-auto col-form-label">interested in</label>
-          <div class="col-auto">
+          <label for="partner-gender" class="col-2 text-center col-form-label">interested in</label>
+          <div class="col-2">
             <div class="dropdown">
-              <button class="btn btn-light border text-start" type="button" data-bs-toggle="dropdown">
+              <button class="custom-select-dropdown btn btn-light text-start w-100" type="button" data-bs-toggle="dropdown">
                 {{
                 registerForm.get('partnerGender')?.value?.length
                 ? getPartnerGenderLabels()
@@ -74,10 +79,10 @@
                 }}
               </button>
 
-              <ul class="dropdown-menu p-2" style="width: 100%">
+              <ul class="dropdown-menu p-1" style="width: 100%">
                 <li *ngFor="let opt of partnerGenderOptions">
                   <label class="dropdown-item" #lbl>
-                    <input type="checkbox" [value]="opt.value"
+                    <input type="checkbox" class="form-check-input" [value]="opt.value"
                       (change)="onMultiSelectChange($event, 'partnerGender', lbl)" />
                     {{ opt.label }}
                   </label>
@@ -85,6 +90,7 @@
               </ul>
             </div>
           </div>
+          <div class="col-3"></div>
         </div>
         <div *ngIf="error" class="alert alert-danger">
           {{ error }}
