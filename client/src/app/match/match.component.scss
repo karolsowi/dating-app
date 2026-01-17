@@ -5,5 +5,13 @@
 }
 
 .about-body {
-  min-height: 150px;
+  min-height: 200px;
+}
+
+.image-slider {
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide-image {
+  transition: opacity 0.3s ease;
 }
