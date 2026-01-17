@@ -4,83 +4,124 @@
     "email": "alice@example.com",
     "password": "password123",
     "name": "Alice",
-    "profilePic": "https://randomuser.me/api/portraits/women/44.jpg",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/44.jpg",
+      "https://randomuser.me/api/portraits/women/43.jpg"
+    ],
     "bio": "Love hiking and coffee.",
-    "age": 24,
-    "gender": "female",
-    "lookingFor": "male"
+    "badgeIds": [1, 2, 3],
+    "dob": "2001-03-22",
+    "userGender": "woman",
+    "partnerGender": [
+      "man"
+    ]
   },
   {
     "id": "2",
     "email": "bob@example.com",
     "password": "password123",
     "name": "Bob",
-    "profilePic": "https://randomuser.me/api/portraits/men/32.jpg",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/32.jpg"
+    ],
     "bio": "Tech enthusiast and gamer.",
-    "age": 28,
-    "gender": "male",
-    "lookingFor": "female"
+    "badgeIds": [2, 3],
+    "dob": "1990-05-15",
+    "userGender": "man",
+    "partnerGender": [
+      "woman"
+    ]
   },
   {
     "id": "3",
     "email": "charlie@example.com",
     "password": "password123",
     "name": "Charlie",
-    "profilePic": "https://randomuser.me/api/portraits/men/45.jpg",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/45.jpg"
+    ],
     "bio": "Music lover. I play guitar.",
-    "age": 30,
-    "gender": "male",
-    "lookingFor": "female"
+    "badgeIds": [1],
+    "dob": "1995-01-01",
+    "userGender": "man",
+    "partnerGender": [
+      "woman"
+    ]
   },
   {
     "id": "4",
     "email": "diana@example.com",
     "password": "password123",
     "name": "Diana",
-    "profilePic": "https://randomuser.me/api/portraits/women/68.jpg",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/68.jpg"
+    ],
     "bio": "Travel addict. Been to 15 countries.",
-    "age": 26,
-    "gender": "female",
-    "lookingFor": "male"
+    "badgeIds": [2],
+    "dob": "1995-01-01",
+    "userGender": "woman",
+    "partnerGender": [
+      "man"
+    ]
   },
   {
     "id": "5",
     "email": "eve@example.com",
     "password": "password123",
     "name": "Eve",
-    "profilePic": "https://randomuser.me/api/portraits/women/90.jpg",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/90.jpg"
+    ],
     "bio": "Art student. Creative spirit.",
-    "age": 22,
-    "gender": "female",
-    "lookingFor": "everyone"
+    "badgeIds": [2],
+    "dob": "1995-01-01",
+    "userGender": "woman",
+    "partnerGender": [
+      "man",
+      "woman",
+      "other"
+    ]
   },
   {
     "id": "emrata",
     "email": "emily@example.com",
     "password": "password123",
     "name": "Emily Ratajkowski",
-    "profilePic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT1DBDLyEQWXty_kfGtg1HxjuD7-NirJ1nZQ&s",
+    "pictures": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT1DBDLyEQWXty_kfGtg1HxjuD7-NirJ1nZQ&s"
+    ],
     "bio": "Model, actress, writer. I wrote a book called 'My Body'.",
-    "age": 32,
-    "gender": "female",
-    "lookingFor": "everyone"
+    "badgeIds": [3],
+    "dob": "1991-06-07",
+    "userGender": "woman",
+    "partnerGender": [
+      "woman",
+      "man",
+      "other"
+    ]
   },
   {
     "id": "brad",
     "email": "brad@example.com",
     "password": "password123",
     "name": "Brad Pitt",
-    "profilePic": "https://www.fit.pl/img/2012/07/_max/brad.jpg",
+    "pictures": [
+      "https://www.fit.pl/img/2012/07/_max/brad.jpg"
+    ],
     "bio": "Just a guy who likes architecture and making movies.",
-    "age": 60,
-    "gender": "male",
-    "lookingFor": "female"
+    "badgeIds": [1, 2],
+    "dob": "1963-12-18",
+    "userGender": "man",
+    "partnerGender": [
+      "woman"
+    ]
   },
   {
     "id": "1768150747738",
     "name": "New Girl",
     "email": "newgirl981@example.com",
     "password": "password123",
+    "badgeIds": [3],
     "dob": "1995-01-01",
     "userGender": "woman",
     "partnerGender": [
@@ -92,6 +133,7 @@
     "name": "New Man",
     "email": "newman981@example.com",
     "password": "password123",
+    "badgeIds": [1, 2, 3],
     "dob": "1995-01-01",
     "userGender": "man",
     "partnerGender": [
