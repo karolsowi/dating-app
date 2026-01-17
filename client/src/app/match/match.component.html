@@ -1,0 +1,83 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="matchMessage" class="alert alert-success fs-4 fw-bold text-center">
+  {{ matchMessage }}
+</div>
+
+<div class="container mt-5">
+  <div class="row justify-content-center align-items-start">
+    
+    <!-- PROFILE CARD -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-secondary">
+        <div class="bg-secondary-subtle position-relative" style="aspect-ratio: 1;">
+          <img
+            *ngIf="currentUser?.pictures?.length > 0"
+            [src]="currentUser.pictures[0]"
+            alt="Profile Picture"
+            class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+          />
+          <i
+            *ngIf="!currentUser?.pictures?.length"
+            class="bi bi-image fs-1 text-dark position-absolute top-50 start-50 translate-middle"
+          >
+          </i>
+
+          <button
+            class="btn btn-dark btn-sm position-absolute top-50 end-0 translate-middle-y me-2 rounded-circle"
+          >
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="card-body">
+          <h3 class="mb-0 fw-semibold">
+            <span *ngIf="loading">Loading...</span>
+            <span *ngIf="!loading && !error"> {{ currentUser?.name }}, {{ userAge }} </span>
+            <span *ngIf="error" class="text-danger">{{ error }}</span>
+          </h3>
+          <span class="text-muted">Warsaw</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE DETAILS -->
+    <div class="col-lg-4 col-md-6">
+      <!-- ABOUT ME -->
+      <div class="card border-primary mb-4">
+        <div class="card-header bg-primary-subtle">
+          <h5 class="fw-semibold">About me:</h5>
+        </div>
+        <div class="card-body about-body">
+          <span *ngIf="loading">Loading bio...</span>
+          <span *ngIf="!loading && !error">{{ currentUser?.bio }}</span>
+          <span *ngIf="error" class="text-danger">{{ error }}</span>
+        </div>
+      </div>
+
+      <!-- LOOKING FOR -->
+      <span class="text-muted d-block mb-2"> I am looking for... </span>
+      <div class="card border-primary mb-4">
+        <div class="card-body">
+          <span class="badge rounded-pill border text-dark fs-6"> 👋 New friends </span>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="d-flex justify-content-around mt-5">
+        <button class="btn btn-outline-danger rounded-circle action-btn" (click)="dislike()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+
+        <button class="btn btn-outline-success rounded-circle action-btn" (click)="like()">
+          <i class="bi bi-suit-heart-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !currentUser" class="alert alert-info mt-5 text-center">
+    <h3>No more profiles to show!</h3>
+    <p>Check back later for more people.</p>
+  </div>
+</div>

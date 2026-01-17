@@ -24,7 +24,7 @@
           <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active">Match</a>
+          <a class="nav-link" routerLink="/match" routerLinkActive="active">Match</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/matches" routerLinkActive="active">Chat</a>
@@ -55,12 +55,7 @@
           </ul>
         </div>
 
-        <img
-          [src]="user.photoUrl || 'placeholder-profile.png'"
-          alt="Profile"
-          class="rounded"
-          style="width: 36px; height: 36px; object-fit: cover"
-        />
+        <i class="bi bi-image fs-2 text-dark"></i>
 
         <a routerLink="/settings" class="text-dark fs-5">
           <i class="bi bi-gear"></i>
