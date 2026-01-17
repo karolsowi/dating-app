@@ -1,0 +1,20 @@
+.modal.fade {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.modal.fade.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.fade.show {
+  opacity: 0.5;
+}

@@ -1,30 +1,48 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="matchMessage" class="alert alert-success fs-4 fw-bold text-center">
-  {{ matchMessage }}
-</div>
-
 <div class="container mt-5">
   <div class="row justify-content-center align-items-start">
-    
     <!-- PROFILE CARD -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card border-secondary">
-        <div class="bg-secondary-subtle position-relative" style="aspect-ratio: 1;">
-          <img
-            *ngIf="currentUser?.pictures?.length > 0"
-            [src]="currentUser.pictures[0]"
-            alt="Profile Picture"
-            class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-          />
+    <div class="col-lg-4 col-md-6 mb-4" *ngIf="displayedUser || loading">
+      <div class="card border-secondary shadow-sm" [@userTransition]="displayedIndex">
+        <div
+          class="bg-secondary-subtle position-relative"
+          style="aspect-ratio: 1; overflow: hidden"
+        >
+          <div
+            class="image-slider position-absolute top-0 start-0 w-100 h-100"
+            [style.transform]="'translateX(' + -displayedPictureIndex * 100 + '%)'"
+          >
+            <img
+              *ngFor="let pic of displayedUser?.pictures; let i = index"
+              [src]="pic"
+              alt="Profile Picture {{ i + 1 }}"
+              class="slide-image position-absolute top-0 w-100 h-100 object-fit-cover"
+              [style.left]="i * 100 + '%'"
+            />
+          </div>
+
           <i
-            *ngIf="!currentUser?.pictures?.length"
+            *ngIf="!displayedUser?.pictures?.length"
             class="bi bi-image fs-1 text-dark position-absolute top-50 start-50 translate-middle"
           >
           </i>
 
           <button
-            class="btn btn-dark btn-sm position-absolute top-50 end-0 translate-middle-y me-2 rounded-circle"
+            *ngIf="displayedUser?.pictures?.length > 1 && displayedPictureIndex > 0"
+            class="btn btn-dark btn-sm position-absolute top-50 start-0 translate-middle-y ms-2 rounded-circle z-3"
+            (click)="prevPicture()"
+          >
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <button
+            *ngIf="
+              displayedUser?.pictures?.length > 1 &&
+              displayedPictureIndex < displayedUser.pictures.length - 1
+            "
+            class="btn btn-dark btn-sm position-absolute top-50 end-0 translate-middle-y me-2 rounded-circle z-3"
+            (click)="nextPicture()"
           >
             <i class="bi bi-chevron-right"></i>
           </button>
@@ -33,7 +51,7 @@
         <div class="card-body">
           <h3 class="mb-0 fw-semibold">
             <span *ngIf="loading">Loading...</span>
-            <span *ngIf="!loading && !error"> {{ currentUser?.name }}, {{ userAge }} </span>
+            <span *ngIf="!loading && !error"> {{ displayedUser?.name }}, {{ userAge }} </span>
             <span *ngIf="error" class="text-danger">{{ error }}</span>
           </h3>
           <span class="text-muted">Warsaw</span>
@@ -41,43 +59,81 @@
       </div>
     </div>
 
+    <!-- No More Profiles Card -->
+    <div class="col-lg-4 col-md-6 mb-4" *ngIf="!loading && !hasMoreUsers">
+      <div class="card border-secondary shadow-sm" [@userTransition]="displayedIndex">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-heartbreak fs-1 text-muted mb-3"></i>
+          <h3 class="text-muted">No more profiles to show!</h3>
+          <p class="text-muted">Check back later for more people.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- PROFILE DETAILS -->
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-4 col-md-6" *ngIf="displayedUser">
       <!-- ABOUT ME -->
-      <div class="card border-primary mb-4">
+      <div class="card border-primary mb-4 shadow-sm">
         <div class="card-header bg-primary-subtle">
           <h5 class="fw-semibold">About me:</h5>
         </div>
         <div class="card-body about-body">
           <span *ngIf="loading">Loading bio...</span>
-          <span *ngIf="!loading && !error">{{ currentUser?.bio }}</span>
+          <span *ngIf="!loading && !error && displayedUser?.bio?.trim()" class="text-dark">{{
+            displayedUser.bio
+          }}</span>
+          <span
+            *ngIf="!loading && !error && (!displayedUser?.bio || !displayedUser.bio.trim())"
+            class="text-muted fst-italic"
+            >No bio provided yet</span
+          >
           <span *ngIf="error" class="text-danger">{{ error }}</span>
         </div>
       </div>
 
       <!-- LOOKING FOR -->
       <span class="text-muted d-block mb-2"> I am looking for... </span>
-      <div class="card border-primary mb-4">
+      <div class="card border-primary mb-4 shadow-sm">
         <div class="card-body">
-          <span class="badge rounded-pill border text-dark fs-6"> 👋 New friends </span>
+          <span
+            *ngFor="let badgeId of displayedUser?.badgeIds"
+            class="badge rounded-pill border text-dark fs-6 me-2 my-1"
+          >
+            {{ getBadgeInfo(badgeId).emoji }} {{ getBadgeInfo(badgeId).text }}
+          </span>
+          <span
+            *ngIf="!displayedUser?.badgeIds || displayedUser.badgeIds.length === 0"
+            class="text-muted fst-italic"
+          >
+            Not specified
+          </span>
         </div>
       </div>
 
       <!-- ACTIONS -->
-      <div class="d-flex justify-content-around mt-5">
-        <button class="btn btn-outline-danger rounded-circle action-btn" (click)="dislike()">
+      <div class="d-flex justify-content-around mt-4">
+        <button
+          class="btn btn-outline-danger rounded-circle action-btn shadow-sm"
+          (click)="dislike()"
+          [disabled]="isProcessingAction">
           <i class="bi bi-x-lg"></i>
         </button>
 
-        <button class="btn btn-outline-success rounded-circle action-btn" (click)="like()">
+        <button
+          class="btn btn-outline-success rounded-circle action-btn shadow-sm"
+          (click)="like()"
+          [disabled]="isProcessingAction">
           <i class="bi bi-suit-heart-fill"></i>
         </button>
       </div>
     </div>
   </div>
-
-  <div *ngIf="!loading && !currentUser" class="alert alert-info mt-5 text-center">
-    <h3>No more profiles to show!</h3>
-    <p>Check back later for more people.</p>
-  </div>
 </div>
+
+<!-- Match Modal -->
+<app-match-modal
+  [matchedUser]="matchedUser"
+  [isVisible]="showMatchModal"
+  (continueMatching)="onContinueMatching()"
+  (goToChat)="onGoToChat($event)">
+</app-match-modal>
