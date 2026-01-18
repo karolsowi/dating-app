@@ -1,10 +1,14 @@
 <app-navbar></app-navbar>
 
-<div class="container-fluid mt-3" style="height: calc(100vh - 80px)">
-  <div class="row h-100">
+<div class="container-fluid" style="height: calc(100vh - 65px)">
+  <div class="row chat-row">
 
     <!-- LEFT SIDEBAR: Conversations -->
     <div class="col-3 border-end p-0">
+      <div class="border-bottom p-3 d-flex align-items-center shadow-sm" style="height:83px">
+        <h4 class="mb-0">Chats</h4>
+      </div>
+
       <div class="list-group list-group-flush" style="height: 100%; overflow-y: auto">
         <button
           *ngFor="let convo of conversations"
@@ -21,7 +25,7 @@
           />
 
           <ng-template #noPicSmall>
-            <i class="bi bi-person-circle fs-3 me-2"></i>
+            <i class="bi bi-person-circle fs-2 me-3"></i>
           </ng-template>
 
           <div>
@@ -33,10 +37,10 @@
     </div>
 
     <!-- MIDDLE: Chat -->
-    <div class="col-6 d-flex flex-column p-0">
+    <div class="col-6 d-flex flex-column p-0 chat-column">
 
       <!-- Chat Header -->
-      <div class="border-bottom p-3 d-flex align-items-center">
+      <div class="border-bottom p-3 d-flex align-items-center shadow-sm">
         <ng-container *ngIf="otherUser?.pictures?.[0]; else noPicBig">
           <img
             [src]="otherUser.pictures[0]"
@@ -47,17 +51,17 @@
         </ng-container>
 
         <ng-template #noPicBig>
-          <i class="bi bi-person-circle fs-1 me-3"></i>
+          <i class="bi bi-person-circle fs-2 ms-1 me-4 text" style="height: 50px"></i>
         </ng-template>
 
-        <h4 class="mb-0">{{ otherUser?.name }}, {{ otherUser?.age }}</h4>
+        <h4 class="mb-0 fw-semibold">{{ otherUser?.name }}, {{ otherUser?.age }}</h4>
       </div>
 
       <!-- Chat Messages -->
       <div
-        class="flex-grow-1 p-3"
+        class="flex-grow-1 p-3 chat-messages"
         #scrollMe
-        style="overflow-y: auto"
+        style="overflow-y: auto; min-height: 0;"
       >
         <div
           *ngFor="let msg of messages"
@@ -71,7 +75,7 @@
             class="d-inline-block p-2 rounded"
             [ngClass]="{
               'bg-primary text-white': msg.fromUserId === currentUser?.id,
-              'bg-light border': msg.fromUserId !== currentUser?.id
+              'bg-secondary-subtle': msg.fromUserId !== currentUser?.id
             }"
             style="max-width: 75%"
           >
@@ -101,10 +105,11 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Shared Media -->
-    <div class="col-3 border-start p-3">
-      <h5>Shared Media</h5>
-      <hr />
-      <p class="text-muted">No shared pictures yet</p>
+    <div class="col-3 border-start p-0">
+      <div class="border-bottom p-3 d-flex align-items-center shadow-sm" style="height:83px">
+        <h4 class="mb-0">Shared media</h4>
+      </div>
+      <p class="text-muted p-3">No shared pictures yet</p>
     </div>
 
   </div>
