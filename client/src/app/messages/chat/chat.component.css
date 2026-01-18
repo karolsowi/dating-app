@@ -1,8 +1,14 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .chat-column {
   min-height: 0;
 }
 
-.chat-column > div[style*="overflow-y"] {
+.chat-column > div[style*='overflow-y'] {
   min-height: 0;
 }
 
@@ -59,4 +65,3 @@
 .list-group-item:active {
   transform: scale(0.98);
 }
-

@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { filter, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-chat',
@@ -22,6 +23,14 @@ import { Router } from '@angular/router';
   imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
+  animations: [
+    trigger('transition', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(40px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+    ]),
+  ],
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
@@ -33,6 +42,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   shouldScroll = false;
   chatReady = false;
   conversations: any[] = [];
+  initialId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,33 +54,41 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
+    // Get the user once
     this.authService.currentUser$.pipe(filter(Boolean), take(1)).subscribe(async (user) => {
       this.currentUser = user;
       await this.loadConversations();
 
-      const userId = this.route.snapshot.paramMap.get('userId');
-      if (!userId) {
-        if (this.conversations.length === 0) return;
-
+      // Check if we are at the base path /messages without an ID
+      this.initialId = this.route.snapshot.paramMap.get('userId');
+      if (!this.initialId && this.conversations.length > 0) {
         this.openChat(this.conversations[0].userId);
-        return;
       }
-
-      this.initChat(userId);
     });
 
+    // Find which chat is open
+    this.route.paramMap.subscribe((params) => {
+      const userId = params.get('userId');
+      if (userId) {
+        this.prepareNewChat(); // Clear old data first
+        this.initChat(userId);
+      }
+    });
+
+    // Poll for new messages every 5 seconds
     setInterval(() => {
       if (this.otherUser) {
         this.loadMessages(this.otherUser.id);
       }
       this.loadConversations();
     }, 5000);
+  }
 
-    this.route.paramMap.subscribe((params) => {
-      const newUserId = params.get('userId');
-      if (!newUserId) return;
-      this.initChat(newUserId);
-    });
+  // Helper to prevent "flickering" or showing old messages while loading new ones
+  private prepareNewChat() {
+    this.messages = [];
+    this.otherUser = null;
+    this.chatReady = false;
   }
 
   private initChat(userId: string) {
@@ -109,14 +127,38 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage() {
-    if (!this.newMessage.trim()) return;
+    const content = this.newMessage.trim();
+    if (!content || !this.otherUser) return;
 
-    this.chatService.sendMessage(this.otherUser.id, this.newMessage).subscribe((msg) => {
-      this.messages.push(msg);
-      this.newMessage = '';
-      this.shouldScroll = true;
-    });
+    // 1. Create a temporary local message object
+    const tempMessage = {
+      content: content,
+      fromUserId: this.currentUser.id,
+      timestamp: new Date(), // Local time for instant feedback
+      isSending: true, // Optional: you can use this to show a "sending..." style
+    };
+
+    // 2. Update UI instantly
+    this.messages.push(tempMessage);
+    this.newMessage = ''; // Clear input immediately
+    this.shouldScroll = true;
     this.cdr.detectChanges();
+
+    // 3. Send to backend in the background
+    this.chatService.sendMessage(this.otherUser.id, content).subscribe({
+      next: (actualMsg) => {
+        // Replace the temp message with the real one from the server (which has the real ID)
+        const index = this.messages.indexOf(tempMessage);
+        if (index !== -1) {
+          this.messages[index] = actualMsg;
+        }
+      },
+      error: (err) => {
+        // Optional: Remove the message or show an error if sending fails
+        this.messages = this.messages.filter((m) => m !== tempMessage);
+        alert('Message failed to send.');
+      },
+    });
   }
 
   ngAfterViewChecked() {
@@ -128,5 +170,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   openChat(otherUserId: string) {
     this.router.navigate(['/messages', otherUserId]);
+  }
+
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }
