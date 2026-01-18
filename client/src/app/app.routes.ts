@@ -14,6 +14,7 @@ export const routes: Routes = [
     { path: 'home', component: MainComponent },
     { path: 'match', component: MatchComponent },
     { path: 'matches', component: MatchListComponent },
+    { path: 'messages', component: ChatComponent },
     { path: 'messages/:userId', component: ChatComponent },
     { path: 'settings', component: SettingsComponent },
     { path: '', redirectTo: 'auth/login', pathMatch: 'full' },

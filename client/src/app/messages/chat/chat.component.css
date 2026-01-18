@@ -1,0 +1,11 @@
+/* Ensures the column doesn't grow beyond viewport */
+.chat-column {
+  min-height: 0;
+}
+
+/* Messages area becomes the ONLY scrollable part */
+.chat-messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
