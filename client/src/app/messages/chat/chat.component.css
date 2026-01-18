@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-column {
+  min-height: 0;
+}
+
+.chat-column > div[style*='overflow-y'] {
+  min-height: 0;
+}
+
+.container-fluid {
+  height: calc(100vh - 80px);
+}
+
+.chat-row {
+  height: 100%;
+}
+
+.chat-column {
+  height: 100%;
+  min-height: 0;
+}
+
+.chat-messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.list-group-flush {
+  padding: 0.5rem;
+}
+
+.list-group-item {
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(var(--bs-primary-rgb), 0.06);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.05s ease;
+}
+
+.list-group-item-action:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.12);
+}
+
+.list-group-item.active {
+  background-color: rgba(var(--bs-primary-rgb), 0.18);
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.list-group-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--bs-primary-rgb), 0.4);
+}
+
+.list-group-item:active {
+  transform: scale(0.98);
+}
