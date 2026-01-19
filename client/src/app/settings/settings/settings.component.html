@@ -1,79 +1,132 @@
-<!-- 
-  W części "I am looking for", opcje powinny zapisywać się w danych użytkownika jako:
-  "badgeIds": [1, 2, 3] (lub inna wybrana kombinacja ofc)
-
-  gdzie:
-  1 = New friends
-  2 = Short-term
-  3 = Long-term
- -->
-
 <app-navbar></app-navbar>
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-header bg-white">
-          <h3 class="mb-0">Edit Profile</h3>
-        </div>
-        <div class="card-body">
-          <div *ngIf="successMessage" class="alert alert-success">
-            {{ successMessage }}
-          </div>
-          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" formControlName="name" />
-            </div>
 
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" class="form-control" id="age" formControlName="age" />
-              </div>
-              <div class="col-md-4">
-                <label for="gender" class="form-label">I am a</label>
-                <select class="form-select" id="gender" formControlName="gender">
-                  <option value="male">Man</option>
-                  <option value="female">Woman</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label for="lookingFor" class="form-label">Looking for</label>
-                <select class="form-select" id="lookingFor" formControlName="lookingFor">
-                  <option value="male">Men</option>
-                  <option value="female">Women</option>
-                  <option value="everyone">Everyone</option>
-                </select>
-              </div>
-            </div>
+<div class="container-fluid border-top">
+  <div class="row">
+    <!-- Left Sidebar -->
+    <div class="col-md-3 col-lg-2 sidebar border-end pt-4 bg-white">
+      <h5 class="ms-3 mb-4 text-uppercase text-primaryy"
+        style="color: #2c3e50; font-weight: bold; letter-spacing: 1px;">Settings</h5>
 
-            <div class="mb-3">
-              <label for="bio" class="form-label">Bio</label>
-              <textarea class="form-control" id="bio" rows="3" formControlName="bio"></textarea>
-            </div>
+      <div class="list-group list-group-flush">
+        <a href="javascript:void(0)"
+          class="list-group-item list-group-item-action btn-sidebar-active border-0 py-3">Edit profile</a>
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0 py-3">Notifications</a>
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0 py-3">Subscription</a>
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0 py-3">General</a>
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0 py-3">Blocked accounts</a>
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action border-0 py-3">Help</a>
 
-            <div class="mb-3">
-              <label for="profilePic" class="form-label">Profile Picture URL</label>
-              <input
-                type="text"
-                class="form-control"
-                id="profilePic"
-                formControlName="profilePic"
-                placeholder="https://example.com/me.jpg"
-              />
-              <small class="text-muted">Enter a URL for your profile picture.</small>
-            </div>
-
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
-                Save Changes
-              </button>
-            </div>
-          </form>
+        <div class="mt-4 px-3">
+          <button (click)="onLogout()" class="btn btn-logout w-100">Log out</button>
         </div>
       </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-8 p-5">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+        <!-- Bio -->
+        <div class="row mb-4">
+          <label for="bio" class="col-sm-3 col-form-label text-end">Bio</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" id="bio" rows="4" formControlName="bio"></textarea>
+          </div>
+        </div>
+
+        <!-- Looking For (Badges) -->
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label text-end">I am looking for</label>
+          <div class="col-sm-9 d-flex gap-3">
+            <div *ngFor="let badge of availableBadges" class="badge-btn px-3 py-2 rounded"
+              [ngClass]="{'active': isBadgeSelected(badge.id), 'bg-warning': isBadgeSelected(badge.id)}"
+              [style.background-color]="isBadgeSelected(badge.id) ? '' : badge.class" (click)="toggleBadge(badge.id)">
+              <span>{{ badge.emoji }}</span> {{ badge.text }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="row mb-4">
+          <label for="name" class="col-sm-3 col-form-label text-end">Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="name" formControlName="name">
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="row mb-4">
+          <label for="email" class="col-sm-3 col-form-label text-end">Email</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" id="email" formControlName="email">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label text-end">Password</label>
+          <div class="col-sm-9">
+            <button type="button" class="btn btn-password" (click)="onChangePassword()">Change password</button>
+          </div>
+        </div>
+
+        <!-- DOB -->
+        <div class="row mb-4">
+          <label for="dob" class="col-sm-3 col-form-label text-end">Date of birth</label>
+          <div class="col-sm-4">
+            <input type="date" class="form-control" id="dob" formControlName="dob">
+          </div>
+        </div>
+
+        <!-- Gender & Partner Preference -->
+        <div class="row mb-5 align-items-center">
+          <label class="col-sm-3 col-form-label text-end">I'm a</label>
+          <div class="col-sm-3">
+            <select class="form-select" formControlName="userGender">
+              <option value="man">Man</option>
+              <option value="woman">Woman</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="col-sm-2 text-center">interested in</div>
+          <div class="col-sm-4">
+            <!-- Simplified multi-select approximation -->
+            <select class="form-select" formControlName="partnerGender" multiple>
+              <option value="man">Men</option>
+              <option value="woman">Women</option>
+              <option value="other">Everyone</option>
+            </select>
+            <small class="text-muted d-block mt-1">Hold Ctrl to select multiple</small>
+          </div>
+        </div>
+
+        <!-- Photos -->
+        <div class="row mb-5">
+          <label class="col-sm-3 col-form-label text-end">Photos</label>
+          <div class="col-sm-9">
+            <div class="d-flex flex-wrap gap-2 mb-2">
+              <div *ngFor="let pic of user?.pictures; let i = index" class="position-relative">
+                <img [src]="pic" class="rounded border" style="width: 100px; height: 100px; object-fit: cover;">
+                <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 p-0"
+                  style="width: 20px; height: 20px; line-height: 1;" (click)="removePhoto(i)">×</button>
+              </div>
+            </div>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add photo URL" #photoInput>
+              <button class="btn btn-outline-secondary" type="button"
+                (click)="addPhoto(photoInput.value); photoInput.value=''">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save Changes</button>
+            <p *ngIf="successMessage" class="text-success mt-2">{{ successMessage }}</p>
+          </div>
+        </div>
+
+      </form>
     </div>
   </div>
 </div>

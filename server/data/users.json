@@ -9,7 +9,11 @@
       "https://randomuser.me/api/portraits/women/43.jpg"
     ],
     "bio": "Love hiking and coffee.",
-    "badgeIds": [1, 2, 3],
+    "badgeIds": [
+      1,
+      2,
+      3
+    ],
     "dob": "2001-03-22",
     "userGender": "woman",
     "partnerGender": [
@@ -25,7 +29,10 @@
       "https://randomuser.me/api/portraits/men/32.jpg"
     ],
     "bio": "Tech enthusiast and gamer.",
-    "badgeIds": [2, 3],
+    "badgeIds": [
+      2,
+      3
+    ],
     "dob": "1990-05-15",
     "userGender": "man",
     "partnerGender": [
@@ -41,7 +48,9 @@
       "https://randomuser.me/api/portraits/men/45.jpg"
     ],
     "bio": "Music lover. I play guitar.",
-    "badgeIds": [1],
+    "badgeIds": [
+      1
+    ],
     "dob": "1995-01-01",
     "userGender": "man",
     "partnerGender": [
@@ -57,7 +66,9 @@
       "https://randomuser.me/api/portraits/women/68.jpg"
     ],
     "bio": "Travel addict. Been to 15 countries.",
-    "badgeIds": [2],
+    "badgeIds": [
+      2
+    ],
     "dob": "1995-01-01",
     "userGender": "woman",
     "partnerGender": [
@@ -73,7 +84,9 @@
       "https://randomuser.me/api/portraits/women/90.jpg"
     ],
     "bio": "Art student. Creative spirit.",
-    "badgeIds": [2],
+    "badgeIds": [
+      2
+    ],
     "dob": "1995-01-01",
     "userGender": "woman",
     "partnerGender": [
@@ -91,7 +104,9 @@
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT1DBDLyEQWXty_kfGtg1HxjuD7-NirJ1nZQ&s"
     ],
     "bio": "Model, actress, writer. I wrote a book called 'My Body'.",
-    "badgeIds": [3],
+    "badgeIds": [
+      3
+    ],
     "dob": "1991-06-07",
     "userGender": "woman",
     "partnerGender": [
@@ -109,7 +124,10 @@
       "https://www.fit.pl/img/2012/07/_max/brad.jpg"
     ],
     "bio": "Just a guy who likes architecture and making movies.",
-    "badgeIds": [1, 2],
+    "badgeIds": [
+      1,
+      2
+    ],
     "dob": "1963-12-18",
     "userGender": "man",
     "partnerGender": [
@@ -121,7 +139,9 @@
     "name": "New Girl",
     "email": "newgirl981@example.com",
     "password": "password123",
-    "badgeIds": [3],
+    "badgeIds": [
+      3
+    ],
     "dob": "1995-01-01",
     "userGender": "woman",
     "partnerGender": [
@@ -133,11 +153,246 @@
     "name": "New Man",
     "email": "newman981@example.com",
     "password": "password123",
-    "badgeIds": [1, 2, 3],
+    "badgeIds": [
+      1,
+      2,
+      3
+    ],
     "dob": "1995-01-01",
     "userGender": "man",
     "partnerGender": [
       "woman"
+    ]
+  },
+  {
+    "id": "1768851962217",
+    "name": "Hubert",
+    "email": "1234@1234",
+    "password": "123456",
+    "dob": "2008-01-01",
+    "userGender": "man",
+    "partnerGender": [
+      "woman"
+    ],
+    "lookingFor": [
+      2
+    ],
+    "badgeIds": [
+      2
+    ],
+    "bio": "test1\ntest2"
+  },
+  {
+    "id": "david",
+    "email": "david@example.com",
+    "password": "password123",
+    "name": "David",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/85.jpg"
+    ],
+    "bio": "Designer. Love art and travel.",
+    "badgeIds": [
+      1,
+      3
+    ],
+    "dob": "1994-06-15",
+    "userGender": "man",
+    "partnerGender": [
+      "man",
+      "woman",
+      "other"
+    ]
+  },
+  {
+    "id": "u6",
+    "name": "Alex",
+    "email": "alex@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/10.jpg",
+      "https://randomuser.me/api/portraits/men/11.jpg"
+    ],
+    "bio": "Fitness instructor.",
+    "dob": "1998-01-01",
+    "userGender": "man",
+    "partnerGender": [
+      "man",
+      "woman"
+    ],
+    "badgeIds": [
+      1,
+      2
+    ]
+  },
+  {
+    "id": "u7",
+    "name": "Jessica",
+    "email": "jess@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/10.jpg",
+      "https://randomuser.me/api/portraits/women/12.jpg"
+    ],
+    "bio": "Photographer.",
+    "dob": "1995-05-05",
+    "userGender": "woman",
+    "partnerGender": [
+      "man",
+      "woman"
+    ],
+    "badgeIds": [
+      3
+    ]
+  },
+  {
+    "id": "u8",
+    "name": "Tom",
+    "email": "tom@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/22.jpg"
+    ],
+    "bio": "Software Engineer.",
+    "dob": "1990-12-12",
+    "userGender": "man",
+    "partnerGender": [
+      "man"
+    ],
+    "badgeIds": [
+      2
+    ]
+  },
+  {
+    "id": "u9",
+    "name": "Anna",
+    "email": "anna@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/25.jpg",
+      "https://randomuser.me/api/portraits/women/26.jpg"
+    ],
+    "bio": "Traveler.",
+    "dob": "1999-03-03",
+    "userGender": "woman",
+    "partnerGender": [
+      "man",
+      "woman",
+      "other"
+    ],
+    "badgeIds": [
+      1,
+      3
+    ]
+  },
+  {
+    "id": "u10",
+    "name": "John",
+    "email": "john@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/33.jpg",
+      "https://randomuser.me/api/portraits/men/34.jpg"
+    ],
+    "bio": "Chef.",
+    "dob": "1992-07-07",
+    "userGender": "man",
+    "partnerGender": [
+      "man"
+    ],
+    "badgeIds": [
+      2
+    ]
+  },
+  {
+    "id": "u11",
+    "name": "Sophia",
+    "email": "sophia@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/40.jpg"
+    ],
+    "bio": "Artist.",
+    "dob": "1996-09-09",
+    "userGender": "woman",
+    "partnerGender": [
+      "man"
+    ],
+    "badgeIds": [
+      1
+    ]
+  },
+  {
+    "id": "u12",
+    "name": "Chris",
+    "email": "chris@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/50.jpg"
+    ],
+    "bio": "Musician.",
+    "dob": "1993-04-04",
+    "userGender": "man",
+    "partnerGender": [
+      "man",
+      "woman"
+    ],
+    "badgeIds": [
+      3
+    ]
+  },
+  {
+    "id": "u13",
+    "name": "Emma",
+    "email": "emma@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/55.jpg"
+    ],
+    "bio": "Doctor.",
+    "dob": "1991-08-08",
+    "userGender": "woman",
+    "partnerGender": [
+      "man"
+    ],
+    "badgeIds": [
+      2
+    ]
+  },
+  {
+    "id": "u14",
+    "name": "Daniel",
+    "email": "daniel@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/60.jpg"
+    ],
+    "bio": "Teacher.",
+    "dob": "1989-11-11",
+    "userGender": "man",
+    "partnerGender": [
+      "woman"
+    ],
+    "badgeIds": [
+      1
+    ]
+  },
+  {
+    "id": "u15",
+    "name": "Olivia",
+    "email": "olivia@test.com",
+    "password": "password",
+    "pictures": [
+      "https://randomuser.me/api/portraits/women/66.jpg"
+    ],
+    "bio": "Writer.",
+    "dob": "1997-02-02",
+    "userGender": "woman",
+    "partnerGender": [
+      "man",
+      "woman"
+    ],
+    "badgeIds": [
+      3
     ]
   }
 ]
