@@ -12,7 +12,7 @@ import { Profile } from './profile/profile';
 export const routes: Routes = [
     { path: 'auth/login', component: LoginComponent },
     { path: 'auth/register', component: RegisterComponent },
-    { path: 'home', component: MatchComponent }, // Changed MainComponent to MatchComponent
+    { path: 'home', component: MainComponent },
     { path: 'match', component: MatchComponent }, // Kept for existing links
     { path: 'matches', component: MatchListComponent },
     { path: 'messages', component: ChatComponent },
