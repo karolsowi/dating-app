@@ -19,5 +19,12 @@
     "toUserId": "4",
     "content": "yes",
     "timestamp": "2026-01-10T11:26:04.296Z"
+  },
+  {
+    "id": "1768943397219",
+    "fromUserId": "4",
+    "toUserId": "2",
+    "content": "wassup",
+    "timestamp": "2026-01-20T21:09:57.219Z"
   }
 ]

@@ -19,19 +19,26 @@ exports.getUsers = (req, res) => {
       `Loaded ${users.length} users, ${likes.length} likes, ${passes.length} passes`,
     );
 
+    // Force currentUserId to string
+    const currentUserIdStr = String(currentUserId);
+
     // Filter out already swiped users (liked or passed)
+    // Ensure we compare strings and store strings in the Set
     const likedUserIds = likes
-      .filter((l) => l.fromUserId === currentUserId)
-      .map((l) => l.toUserId);
+      .filter((l) => String(l.fromUserId) === currentUserIdStr)
+      .map((l) => String(l.toUserId));
     const passedUserIds = passes
-      .filter((p) => p.fromUserId === currentUserId)
-      .map((p) => p.toUserId);
+      .filter((p) => String(p.fromUserId) === currentUserIdStr)
+      .map((p) => String(p.toUserId));
+
+    // Create a Set of ignored User IDs (all strings)
     const swipedUserIds = new Set([...likedUserIds, ...passedUserIds]);
+
     console.log(
-      `User ${currentUserId} has swiped on ${swipedUserIds.size} users`,
+      `User ${currentUserIdStr} has swiped on ${swipedUserIds.size} users`,
     );
 
-    const currentUser = users.find((u) => u.id === currentUserId);
+    const currentUser = users.find((u) => String(u.id) === currentUserIdStr);
     if (!currentUser) {
       return res.status(404).json({ message: "Current user not found" });
     }
@@ -43,8 +50,13 @@ exports.getUsers = (req, res) => {
         : ["man", "woman", "other"];
 
     const filteredUsers = users.filter((u) => {
-      if (u.id === currentUserId) return false;
-      if (swipedUserIds.has(u.id)) return false;
+      const uIdStr = String(u.id);
+
+      // Don't show myself
+      if (uIdStr === currentUserIdStr) return false;
+
+      // Don't show already swiped
+      if (swipedUserIds.has(uIdStr)) return false;
 
       const userGender = u.userGender || "other";
 
@@ -92,11 +104,16 @@ exports.getUser = (req, res) => {
     };
   });
 
+  // Calculate total profile likes
+  const likes = readData(files.likes);
+  const totalLikes = likes.filter(l => String(l.toUserId) === String(user.id)).length;
+
   res.json({
     ...user,
     age,
     pictures: user.pictures, // Keep original array
-    minifiedPictures: picturesWithStats // Add enriched one
+    minifiedPictures: picturesWithStats, // Add enriched one
+    totalLikes // Add total likes count
   });
 };
 

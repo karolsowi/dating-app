@@ -1,10 +1,7 @@
 <app-navbar></app-navbar>
 
-<div
-  class="container-fluid overflow-hidden"
-  style="height: calc(100vh - 65px)"
-  *ngIf="initialId || conversations.length > 0; else noConvosView"
->
+<div class="container-fluid overflow-hidden" style="height: calc(100vh - 65px)"
+  *ngIf="initialId || conversations.length > 0; else noConvosView">
   <div class="row chat-row">
     <!-- LEFT SIDEBAR: Conversations -->
     <div class="col-3 border-end p-0">
@@ -13,19 +10,11 @@
       </div>
 
       <div class="list-group list-group-flush" style="height: 100%; overflow-y: auto">
-        <button
-          *ngFor="let convo of conversations"
+        <button *ngFor="let convo of conversations"
           class="list-group-item list-group-item-action d-flex align-items-center"
-          [class.active]="convo.id === otherUser?.id"
-          (click)="openChat(convo.userId)"
-        >
-          <img
-            *ngIf="convo.pictures?.[0]; else noPicSmall"
-            [src]="convo.pictures[0]"
-            class="rounded-circle me-2"
-            width="40"
-            height="40"
-          />
+          [class.active]="convo.id === otherUser?.id" (click)="openChat(convo.userId)">
+          <img *ngIf="convo.pictures?.[0]; else noPicSmall" [src]="convo.pictures[0]" class="rounded-circle me-2"
+            width="40" height="40" />
 
           <ng-template #noPicSmall>
             <i class="bi bi-person-circle fs-2 me-3"></i>
@@ -44,34 +33,30 @@
       <!-- Chat Header -->
       <div class="border-bottom p-3 d-flex align-items-center shadow-sm">
         <ng-container *ngIf="otherUser?.pictures?.[0]; else noPicBig">
-          <img [src]="otherUser.pictures[0]" class="rounded-circle me-3" width="50" height="50" />
+          <img [src]="otherUser.pictures[0]" class="rounded-circle me-3" width="50" height="50" style="cursor: pointer;"
+            (click)="viewProfile(otherUser.id)" />
         </ng-container>
 
         <ng-template #noPicBig>
-          <i class="bi bi-person-circle fs-2 ms-1 me-4 text" style="height: 50px"></i>
+          <i class="bi bi-person-circle fs-2 ms-1 me-4 text" style="height: 50px; cursor: pointer;"
+            (click)="viewProfile(otherUser.id)"></i>
         </ng-template>
 
-        <h4 class="mb-0 fw-semibold">{{ otherUser?.name }}, {{ otherUser?.age }}</h4>
+        <h4 class="mb-0 fw-semibold" style="cursor: pointer;" (click)="viewProfile(otherUser.id)">
+          {{ otherUser?.name }}, {{ otherUser?.age }}
+        </h4>
       </div>
 
       <!-- Chat Messages -->
       <div class="flex-grow-1 p-3 chat-messages" #scrollMe style="overflow-y: auto; min-height: 0">
-        <div
-          *ngFor="let msg of messages"
-          class="mb-3"
-          [ngClass]="{
+        <div *ngFor="let msg of messages" class="mb-3" [ngClass]="{
             'text-end': msg.fromUserId === currentUser?.id,
             'text-start': msg.fromUserId !== currentUser?.id,
-          }"
-        >
-          <div
-            class="d-inline-block p-2 rounded"
-            [ngClass]="{
+          }">
+          <div class="d-inline-block p-2 rounded" [ngClass]="{
               'bg-primary text-white': msg.fromUserId === currentUser?.id,
               'bg-secondary-subtle': msg.fromUserId !== currentUser?.id,
-            }"
-            style="max-width: 75%"
-          >
+            }" style="max-width: 75%">
             {{ msg.content }}
           </div>
           <div class="small text-muted mt-1">
@@ -83,13 +68,8 @@
       <!-- Chat Input -->
       <div class="border-top p-3">
         <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Type a message..."
-            [(ngModel)]="newMessage"
-            (keyup.enter)="sendMessage()"
-          />
+          <input type="text" class="form-control" placeholder="Type a message..." [(ngModel)]="newMessage"
+            (keyup.enter)="sendMessage()" />
           <button class="btn btn-primary" (click)="sendMessage()">
             <i class="bi bi-send"></i>
           </button>
@@ -108,9 +88,7 @@
 </div>
 
 <ng-template #noConvosView>
-  <div
-    class="mt-5 row justify-content-center"
-  >
+  <div class="mt-5 row justify-content-center">
     <!-- No Conversations Card -->
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card border-secondary shadow-sm" [@transition]>

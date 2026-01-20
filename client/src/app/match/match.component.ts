@@ -41,7 +41,7 @@ export class MatchComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.currentUser$
@@ -89,12 +89,13 @@ export class MatchComponent implements OnInit {
   }
 
   get hasMoreUsers(): boolean {
-    return this.displayedIndex < this.users.length - 1;
+    return this.displayedIndex < this.users.length;
   }
 
   like() {
+    console.log('Like button clicked');
     if (!this.displayedUser || this.isProcessingAction) {
-      console.log('Cannot like: no user or already processing');
+      console.log('Cannot like: no user or already processing', { displayedUser: !!this.displayedUser, isProcessing: this.isProcessingAction });
       return;
     }
 
@@ -122,8 +123,9 @@ export class MatchComponent implements OnInit {
   }
 
   dislike() {
+    console.log('Dislike button clicked');
     if (!this.displayedUser || this.isProcessingAction) {
-      console.log('Cannot dislike: no user or already processing');
+      console.log('Cannot dislike: no user or already processing', { displayedUser: !!this.displayedUser, isProcessing: this.isProcessingAction });
       return;
     }
 
@@ -146,7 +148,7 @@ export class MatchComponent implements OnInit {
   }
 
   nextUser() {
-    if (this.displayedIndex + 1 >= this.users.length) {
+    if (this.displayedIndex >= this.users.length) {
       console.log('No more users to show');
       return;
     }
@@ -156,18 +158,30 @@ export class MatchComponent implements OnInit {
     this.cdr.detectChanges(); // Force change detection to update the UI
   }
 
-  nextPicture() {
+  nextPicture(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    console.log('Next picture clicked');
     if (
       this.displayedUser?.pictures &&
       this.displayedPictureIndex < this.displayedUser.pictures.length - 1
     ) {
       this.displayedPictureIndex++;
+      this.cdr.detectChanges();
     }
   }
 
-  prevPicture() {
+  prevPicture(event?: Event) {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    console.log('Prev picture clicked');
     if (this.displayedPictureIndex > 0) {
       this.displayedPictureIndex--;
+      this.cdr.detectChanges();
     }
   }
 
@@ -177,6 +191,14 @@ export class MatchComponent implements OnInit {
 
   onGoToChat(matchedUser: any) {
     // Navigate to chat page with the matched user
+    if (!matchedUser) {
+      console.error('onGoToChat called with null matchedUser');
+      if (this.matchedUser) {
+        matchedUser = this.matchedUser;
+      } else {
+        return;
+      }
+    }
     this.router.navigate([`/messages/${matchedUser.id}`]);
   }
 

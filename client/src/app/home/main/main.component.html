@@ -10,7 +10,7 @@
                 <!-- Match Card -->
                 <div *ngFor="let match of recentMatches" class="card match-card shadow-sm border-0"
                     style="min-width: 200px;">
-                    <div class="card-img-wrapper">
+                    <div class="card-img-wrapper" style="cursor: pointer;" (click)="viewProfile(match.otherUser.id)">
                         <img [src]="getProfileImage(match.otherUser)" class="card-img-top p-3 rounded-circle"
                             alt="Profile">
                     </div>
@@ -44,9 +44,4 @@
 </div>
 
 <!-- Promo Footer -->
-<div class="promo-footer w-100 text-center py-3 mt-auto">
-    <div class="container">
-        <span class="fw-bold">GRINDING+ 30% off!</span>
-        Use your limited offer now! {{ timeLeft }} left until the offer ends
-    </div>
-</div>
+<app-promo-footer></app-promo-footer>

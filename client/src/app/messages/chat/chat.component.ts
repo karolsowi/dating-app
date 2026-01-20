@@ -51,7 +51,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private userService: UserService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Get the user once
@@ -105,7 +105,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     try {
       this.myScrollContainer.nativeElement.scrollTop =
         this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) {}
+    } catch (err) { }
   }
 
   loadMessages(otherUserId: string) {
@@ -170,6 +170,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   openChat(otherUserId: string) {
     this.router.navigate(['/messages', otherUserId]);
+  }
+
+  viewProfile(userId: string) {
+    this.router.navigate(['/profile', userId]);
   }
 
   goToHome() {

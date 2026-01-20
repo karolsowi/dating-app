@@ -1,23 +1,22 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatchService } from '../../services/match.service';
 import { AuthService } from '../../services/auth.service';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { PromoFooterComponent } from '../../shared/promo-footer/promo-footer.component';
 
 @Component({
     selector: 'app-main',
     standalone: true,
-    imports: [CommonModule, NavbarComponent],
+    imports: [CommonModule, NavbarComponent, PromoFooterComponent],
     templateUrl: './main.component.html',
     styleUrl: './main.component.css'
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit {
     recentMatches: any[] = [];
     isLoading = false;
     user: any;
-    timeLeft: string = '';
-    private timerId: any;
 
     constructor(
         private matchService: MatchService,
@@ -41,41 +40,6 @@ export class MainComponent implements OnInit, OnDestroy {
                 }
             });
         }
-        this.startCountdown();
-    }
-
-    ngOnDestroy(): void {
-        if (this.timerId) {
-            clearInterval(this.timerId);
-        }
-    }
-
-    startCountdown() {
-        const calculateTimeLeft = () => {
-            const now = new Date();
-            const midnight = new Date();
-            midnight.setHours(24, 0, 0, 0); // Next midnight
-
-            const diff = midnight.getTime() - now.getTime();
-            if (diff <= 0) {
-                this.timeLeft = '00:00:00';
-                return;
-            }
-
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-
-            this.timeLeft = `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(seconds)}`;
-            this.cdr.detectChanges();
-        };
-
-        calculateTimeLeft(); // Initial call
-        this.timerId = setInterval(calculateTimeLeft, 1000);
-    }
-
-    pad(num: number): string {
-        return num < 10 ? '0' + num : num.toString();
     }
 
     loadRecentMatches() {
@@ -103,6 +67,10 @@ export class MainComponent implements OnInit, OnDestroy {
 
     openChat(userId: string) {
         this.router.navigate(['/messages', userId]);
+    }
+
+    viewProfile(userId: string) {
+        this.router.navigate(['/profile', userId]);
     }
 
     getProfileImage(user: any): string {

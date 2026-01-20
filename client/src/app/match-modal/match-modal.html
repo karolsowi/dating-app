@@ -1,5 +1,5 @@
 <!-- Bootstrap Modal -->
-<div class="modal fade" [ngClass]="{ show: isVisible }" tabindex="-1">
+<div class="modal fade" [ngClass]="{ show: isVisible }" [style.display]="isVisible ? 'block' : 'none'" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">

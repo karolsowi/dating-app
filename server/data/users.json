@@ -26,7 +26,8 @@
     "password": "password123",
     "name": "Bob",
     "pictures": [
-      "https://randomuser.me/api/portraits/men/32.jpg"
+      "https://randomuser.me/api/portraits/men/32.jpg",
+      "https://www.dystryktzero.pl/images/detailed/399/x_yoto65681_2z3c-lj.jpg"
     ],
     "bio": "Tech enthusiast and gamer.",
     "badgeIds": [
@@ -37,6 +38,10 @@
     "userGender": "man",
     "partnerGender": [
       "woman"
+    ],
+    "lookingFor": [
+      2,
+      3
     ]
   },
   {
@@ -63,7 +68,8 @@
     "password": "password123",
     "name": "Diana",
     "pictures": [
-      "https://randomuser.me/api/portraits/women/68.jpg"
+      "https://randomuser.me/api/portraits/women/68.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQ818YHcDFE_nUqJKcxb7-FglARzTKiHOAg&s"
     ],
     "bio": "Travel addict. Been to 15 countries.",
     "badgeIds": [
@@ -73,6 +79,9 @@
     "userGender": "woman",
     "partnerGender": [
       "man"
+    ],
+    "lookingFor": [
+      2
     ]
   },
   {
@@ -139,6 +148,7 @@
     "name": "New Girl",
     "email": "newgirl981@example.com",
     "password": "password123",
+    "pictures": [],
     "badgeIds": [
       3
     ],
@@ -153,6 +163,7 @@
     "name": "New Man",
     "email": "newman981@example.com",
     "password": "password123",
+    "pictures": [],
     "badgeIds": [
       1,
       2,

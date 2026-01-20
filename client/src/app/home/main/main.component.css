@@ -63,17 +63,7 @@
     transform: scale(1.05);
 }
 
-.promo-footer {
-    background-color: #ffcc80;
-    /* Orange promo color */
-    color: #333;
-    font-size: 0.9rem;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-}
+
 
 .btn-chat:hover,
 .btn-chat:hover i {

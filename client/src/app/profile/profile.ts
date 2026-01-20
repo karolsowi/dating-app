@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
+import { PromoFooterComponent } from '../shared/promo-footer/promo-footer.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, NavbarComponent, PromoFooterComponent],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -23,11 +25,28 @@ export class Profile implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) { }
 
+  get isOwnProfile(): boolean {
+    const loggedInId = this.authService.currentUserValue?.id;
+    return loggedInId === this.user?.id;
+  }
+
+  // Badges configuration (duplicated from EditProfile, ideally shared service/const)
+  availableBadges = [
+    { id: 1, text: 'New friends', emoji: '👋', class: 'badge-new-friends' },
+    { id: 2, text: 'Short-term', emoji: '🎉', class: 'badge-short-term' },
+    { id: 3, text: 'Long-term', emoji: '💗', class: 'badge-long-term' }
+  ];
+
+  getBadge(id: number) {
+    return this.availableBadges.find(b => b.id === id);
+  }
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params: any) => {
       const userId = params.get('id');
       console.log('Profile params changed, ID:', userId);
 
@@ -55,7 +74,7 @@ export class Profile implements OnInit {
 
   loadUser(id: string) {
     this.userService.getUser(id).subscribe({
-      next: (user) => {
+      next: (user: any) => {
         console.log('User data loaded:', user);
         try {
           if (!user) {
@@ -63,39 +82,41 @@ export class Profile implements OnInit {
           }
           this.user = user;
 
-          // Use minifiedPictures from server which contains real like stats
-          if (user.minifiedPictures && user.minifiedPictures.length > 0) {
-            this.displayPhotos = user.minifiedPictures.map((item: any) => ({
-              url: item.url,
-              likes: item.likes || 0,
-              isLiked: item.isLiked || false,
-              comments: Math.floor(Math.random() * 10), // Comments still mock for now
-              description: 'Photo description...'
-            }));
-          } else {
-            // Fallback if no specific stats (should not happen with new backend)
-            this.displayPhotos = (user.pictures || []).map((url: string) => ({
-              url: url,
-              likes: 0,
-              isLiked: false,
-              comments: 0,
-              description: 'Photo description...'
-            }));
+          // Determine main profile pic (fallback to first picture if profilePic is missing/broken)
+          const mainProfilePic = user.profilePic || (user.pictures && user.pictures.length > 0 ? user.pictures[0] : null);
+          this.user.displayProfilePic = mainProfilePic;
+
+          console.log('Main Profile Pic:', mainProfilePic);
+          console.log('User Pictures:', user.pictures);
+          console.log('Minified Pictures:', user.minifiedPictures);
+
+          // Filter out profile pic from minifiedPictures
+          let rawPhotos = user.minifiedPictures || [];
+          if (rawPhotos.length === 0 && user.pictures) {
+            rawPhotos = user.pictures.map((url: string) => ({ url, likes: 0, isLiked: false }));
           }
 
-          // Ensure we have at least 4 placeholders if fewer photos exist (to match grid)
-          while (this.displayPhotos.length < 4) {
-            this.displayPhotos.push({
-              url: null, // Placeholder
-              likes: 0,
-              isLiked: false,
-              comments: 0
-            });
-          }
+          // Filter logic: exclude the main displayed picture
+          const filteredPhotos = rawPhotos.filter((p: any) => p.url !== mainProfilePic);
+          console.log('Filtered Photos:', filteredPhotos);
+
+          this.displayPhotos = filteredPhotos.map((item: any) => ({
+            ...item,
+            // comments removed as per request
+            // description: 'Photo description...' // preserved if needed, or remove? keeping basic struct
+          }));
+
+          // Fill grid to at least 4 or 6? User said "grid". 
+          // Let's stick to matching EditProfile grid size or similar. 
+          // If public profile, we just show what exists, maybe no placeholders if empty?
+          // "it should not show empty placeholder images" -> implied for edit maybe? 
+          // "pictures on right side" -> public view. 
+          // The user said "it should not show empty placeholder images, instead show + icon after the last image" -> this was likely for EDIT mode.
+          // For public mode, we just show the photos.
 
           this.loading = false;
           console.log('Profile setup complete. Loading = false');
-          this.cdr.detectChanges(); // Force update view
+          this.cdr.detectChanges();
 
         } catch (e) {
           console.error('Error in loadUser processing:', e);
@@ -104,7 +125,7 @@ export class Profile implements OnInit {
           this.cdr.detectChanges();
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Failed to load user API:', err);
         this.error = 'Failed to load user profile.';
         this.loading = false;
@@ -165,14 +186,14 @@ export class Profile implements OnInit {
     this.cdr.detectChanges(); // Update UI immediately
 
     this.userService.togglePhotoLike(photo.url).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('Like toggled:', response);
         // Sync with server response to be sure
         photo.likes = response.count;
         photo.isLiked = response.isLiked;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Like failed', err);
         // Revert on error
         photo.likes = originalLikes;

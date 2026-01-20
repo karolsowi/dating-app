@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "photoUrl": "https://randomuser.me/api/portraits/men/32.jpg",
+    "fromUserId": "2",
+    "timestamp": "2026-01-20T21:27:16.825Z"
+  },
+  {
+    "photoUrl": "https://www.dystryktzero.pl/images/detailed/399/x_yoto65681_2z3c-lj.jpg",
+    "fromUserId": "4",
+    "timestamp": "2026-01-20T22:36:03.630Z"
+  },
+  {
+    "photoUrl": "https://www.dystryktzero.pl/images/detailed/399/x_yoto65681_2z3c-lj.jpg",
+    "fromUserId": "2",
+    "timestamp": "2026-01-20T22:37:06.513Z"
+  }
+]

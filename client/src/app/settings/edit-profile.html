@@ -1,102 +1,125 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<div class="container pb-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-    <!-- Bio -->
-    <div class="row mb-4">
-        <label for="bio" class="col-sm-3 col-form-label text-end">Bio</label>
-        <div class="col-sm-9">
-            <textarea class="form-control" id="bio" rows="4" formControlName="bio"></textarea>
-        </div>
-    </div>
+                <!-- 1. Profile Main Card -->
+                <div class="card border-secondary shadow-sm mb-4">
+                    <div class="bg-secondary-subtle position-relative" style="aspect-ratio: 1; overflow: hidden">
+                        <img [src]="displayProfilePic || 'https://via.placeholder.com/300'" alt="Profile Picture"
+                            class="position-absolute top-0 w-100 h-100 object-fit-cover">
 
-    <!-- Looking For (Badges) -->
-    <div class="row mb-4">
-        <label class="col-sm-3 col-form-label text-end">I am looking for</label>
-        <div class="col-sm-9 d-flex gap-3">
-            <div *ngFor="let badge of availableBadges" class="badge-btn px-3 py-2 rounded"
-                [ngClass]="{'active': isBadgeSelected(badge.id), 'bg-warning': isBadgeSelected(badge.id)}"
-                [style.background-color]="isBadgeSelected(badge.id) ? '' : badge.class" (click)="toggleBadge(badge.id)">
-                <span>{{ badge.emoji }}</span> {{ badge.text }}
-            </div>
-        </div>
-    </div>
+                        <button type="button"
+                            class="btn btn-light btn-sm position-absolute bottom-0 end-0 m-3 rounded-circle border shadow-sm"
+                            (click)="changeProfilePic()" title="Change Profile Picture">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </div>
 
-    <!-- Name -->
-    <div class="row mb-4">
-        <label for="name" class="col-sm-3 col-form-label text-end">Name</label>
-        <div class="col-sm-9">
-            <input type="text" class="form-control" id="name" formControlName="name">
-        </div>
-    </div>
-
-    <!-- Email -->
-    <div class="row mb-4">
-        <label for="email" class="col-sm-3 col-form-label text-end">Email</label>
-        <div class="col-sm-9">
-            <input type="email" class="form-control" id="email" formControlName="email">
-        </div>
-    </div>
-
-    <!-- Password -->
-    <div class="row mb-4">
-        <label class="col-sm-3 col-form-label text-end">Password</label>
-        <div class="col-sm-9">
-            <button type="button" class="btn btn-password" (click)="onChangePassword()">Change password</button>
-        </div>
-    </div>
-
-    <!-- DOB -->
-    <div class="row mb-4">
-        <label for="dob" class="col-sm-3 col-form-label text-end">Date of birth</label>
-        <div class="col-sm-4">
-            <input type="date" class="form-control" id="dob" formControlName="dob">
-        </div>
-    </div>
-
-    <!-- Gender & Partner Preference -->
-    <div class="row mb-5 align-items-center">
-        <label class="col-sm-3 col-form-label text-end">I'm a</label>
-        <div class="col-sm-3">
-            <select class="form-select" formControlName="userGender">
-                <option value="man">Man</option>
-                <option value="woman">Woman</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-        <div class="col-sm-2 text-center">interested in</div>
-        <div class="col-sm-4">
-            <!-- Simplified multi-select approximation -->
-            <select class="form-select" formControlName="partnerGender" multiple>
-                <option value="man">Men</option>
-                <option value="woman">Women</option>
-                <option value="other">Everyone</option>
-            </select>
-            <small class="text-muted d-block mt-1">Hold Ctrl to select multiple</small>
-        </div>
-    </div>
-
-    <!-- Photos -->
-    <div class="row mb-5">
-        <label class="col-sm-3 col-form-label text-end">Photos</label>
-        <div class="col-sm-9">
-            <div class="d-flex flex-wrap gap-2 mb-2">
-                <div *ngFor="let pic of user?.pictures; let i = index" class="position-relative">
-                    <img [src]="pic" class="rounded border" style="width: 100px; height: 100px; object-fit: cover;">
-                    <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 p-0"
-                        style="width: 20px; height: 20px; line-height: 1;" (click)="removePhoto(i)">×</button>
+                    <div class="card-body">
+                        <h3 class="mb-0 fw-semibold">{{ user?.name }}</h3>
+                        <div class="mb-3 w-100 mt-2">
+                            <label class="form-label small text-muted">Name</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="name">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Add photo URL" #photoInput>
-                <button class="btn btn-outline-secondary" type="button"
-                    (click)="addPhoto(photoInput.value); photoInput.value=''">Add</button>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-9 offset-sm-3">
-            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save Changes</button>
-            <p *ngIf="successMessage" class="text-success mt-2">{{ successMessage }}</p>
+                <!-- 2. About Me Card -->
+                <div class="card border-primary mb-4 shadow-sm">
+                    <div class="card-header bg-primary-subtle">
+                        <h5 class="fw-semibold mb-0">About me:</h5>
+                    </div>
+                    <div class="card-body">
+                        <textarea class="form-control border-0" style="min-height: 120px;" formControlName="bio"
+                            placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                </div>
+
+                <!-- 3. Photos Grid -->
+                <h5 class="fw-bold mb-3 ps-1">Photos</h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-4" *ngFor="let item of gridItems">
+
+                        <!-- Photo Item -->
+                        <div *ngIf="item.type === 'photo'" class="ratio ratio-1x1 position-relative group-hover">
+                            <img [src]="item.url" class="rounded object-fit-cover w-100 h-100 border shadow-sm"
+                                alt="Gallery Photo">
+                            <button type="button"
+                                class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 rounded-circle p-0 d-flex align-items-center justify-content-center"
+                                style="width: 24px; height: 24px;" (click)="removePhoto(item.index)">
+                                <span style="line-height: 0; margin-top: -2px;">&times;</span>
+                            </button>
+                        </div>
+
+                        <!-- Add Button -->
+                        <div *ngIf="item.type === 'add'" class="ratio ratio-1x1">
+                            <div class="w-100 h-100 border rounded d-flex justify-content-center align-items-center bg-light cursor-pointer shadow-sm hover-elevate"
+                                (click)="triggerAddPhoto()">
+                                <i class="bi bi-plus-lg fs-1 text-muted"></i>
+                            </div>
+                        </div>
+
+                        <!-- Empty Placeholder -->
+                        <div *ngIf="item.type === 'empty'" class="ratio ratio-1x1">
+                            <div class="w-100 h-100 border rounded bg-light-subtle dashed-border"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 4. Preferences / Looking For -->
+                <span class="text-muted d-block mb-2"> Preferences </span>
+                <div class="card border-primary mb-4 shadow-sm">
+                    <div class="card-body">
+
+                        <label class="form-label small text-muted fw-bold mb-2">LOOKING FOR</label>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <div *ngFor="let badge of availableBadges" class="badge-btn px-3 py-2 rounded border"
+                                [ngClass]="{'active-badge': isBadgeSelected(badge.id)}" (click)="toggleBadge(badge.id)">
+                                <span>{{ badge.emoji }}</span> {{ badge.text }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label small text-muted">I am a</label>
+                                <select class="form-select form-select-sm" formControlName="userGender">
+                                    <option value="man">Man</option>
+                                    <option value="woman">Woman</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label small text-muted">Interested in</label>
+                                <select class="form-select form-select-sm" formControlName="partnerGender" multiple
+                                    size="3">
+                                    <option value="man">Men</option>
+                                    <option value="woman">Women</option>
+                                    <option value="other">Everyone</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label class="form-label small text-muted">Date of Birth</label>
+                            <input type="date" class="form-control form-control-sm" formControlName="dob">
+                        </div>
+                        <div class="mt-2">
+                            <label class="form-label small text-muted">Email</label>
+                            <input type="email" class="form-control form-control-sm" formControlName="email">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4 py-2" [disabled]="profileForm.invalid">Save
+                        Changes</button>
+                </div>
+                <p *ngIf="successMessage" class="text-success text-end mt-2">{{ successMessage }}</p>
+
+            </form>
         </div>
     </div>
-</form>
+</div>
