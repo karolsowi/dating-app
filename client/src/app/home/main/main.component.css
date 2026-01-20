@@ -74,3 +74,10 @@
     left: 0;
     z-index: 1000;
 }
+
+.btn-chat:hover,
+.btn-chat:hover i {
+    color: #fd7e14 !important;
+    /* Bootstrap orange */
+    background-color: white !important;
+}
