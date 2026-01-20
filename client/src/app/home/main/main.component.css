@@ -1,0 +1,83 @@
+.bg-light-green {
+    background-color: #d1e7dd;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.match-card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s;
+    background-color: #d1e7dd;
+    /* Matching the bottom part */
+}
+
+.match-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-wrapper {
+    background-color: #d1e7dd;
+    /* Greenish background for image area too */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-img-top {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.matching-scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 10px;
+    /* Space for scrollbar */
+}
+
+/* Custom scrollbar for Webkit */
+.matching-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.matching-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.btn-find-match {
+    background-color: #f8d7da;
+    /* Pinkish */
+    color: #000;
+    border: 1px solid #f5c2c7;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.btn-find-match:hover {
+    background-color: #f1b0b7;
+    transform: scale(1.05);
+}
+
+.promo-footer {
+    background-color: #ffcc80;
+    /* Orange promo color */
+    color: #333;
+    font-size: 0.9rem;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.btn-chat:hover,
+.btn-chat:hover i {
+    color: #fd7e14 !important;
+    /* Bootstrap orange */
+    background-color: white !important;
+}

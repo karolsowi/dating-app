@@ -18,8 +18,8 @@ import { HelpComponent } from './settings/help';
 export const routes: Routes = [
     { path: 'auth/login', component: LoginComponent },
     { path: 'auth/register', component: RegisterComponent },
-    { path: 'home', component: MatchComponent },
-    { path: 'match', component: MatchComponent },
+    { path: 'home', component: MainComponent },
+    { path: 'match', component: MatchComponent }, // Kept for existing links
     { path: 'matches', component: MatchListComponent },
     { path: 'messages', component: ChatComponent },
     { path: 'messages/:userId', component: ChatComponent },
