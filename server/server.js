@@ -13,6 +13,7 @@ const LIKES_FILE = path.join(DATA_DIR, 'likes.json');
 const PASSES_FILE = path.join(DATA_DIR, 'passes.json');
 const MATCHES_FILE = path.join(DATA_DIR, 'matches.json');
 const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json');
+const PHOTO_LIKES_FILE = path.join(DATA_DIR, 'photo_likes.json');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -49,7 +50,8 @@ app.locals.files = {
     likes: LIKES_FILE,
     passes: PASSES_FILE,
     matches: MATCHES_FILE,
-    messages: MESSAGES_FILE
+    messages: MESSAGES_FILE,
+    photoLikes: PHOTO_LIKES_FILE
 };
 
 // Migration Logic: Split db.json if separate files don't exist
@@ -75,6 +77,7 @@ if (fs.existsSync(DB_FILE) && !fs.existsSync(USERS_FILE)) {
     if (!fs.existsSync(PASSES_FILE)) writeData(PASSES_FILE, []);
     if (!fs.existsSync(MATCHES_FILE)) writeData(MATCHES_FILE, []);
     if (!fs.existsSync(MESSAGES_FILE)) writeData(MESSAGES_FILE, []);
+    if (!fs.existsSync(PHOTO_LIKES_FILE)) writeData(PHOTO_LIKES_FILE, []);
 }
 
 // Basic Route

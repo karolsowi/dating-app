@@ -4,20 +4,11 @@
       <img src="/logo.png" alt="Grinding Logo" height="40" />
     </a>
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div
-      class="collapse navbar-collapse"
-      id="navbarNav"
-      *ngIf="authService.currentUser$ | async as user"
-    >
+    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="authService.currentUser$ | async as user">
       <!-- LEFT SIDE -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
@@ -34,21 +25,13 @@
       <!-- RIGHT SIDE -->
       <div class="d-flex align-items-center gap-3">
         <div class="dropdown">
-          <span
-            class="fw-semibold dropdown-toggle"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            style="cursor: pointer"
-          >
+          <span class="fw-semibold dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="cursor: pointer">
             Hi, {{ user.name }}!
           </span>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <button
-                class="dropdown-item text-danger d-flex align-items-center gap-2"
-                (click)="authService.logout()"
-              >
+              <button class="dropdown-item text-danger d-flex align-items-center gap-2" (click)="authService.logout()">
                 <i class="bi bi-box-arrow-right"></i> Logout
               </button>
             </li>
@@ -56,13 +39,19 @@
         </div>
 
         <!-- Avatar -->
-        <ng-container *ngIf="user?.pictures?.length > 0; else placeholder">
-          <img [src]="user.pictures[0]" alt="User avatar" height="50" class="rounded-circle me-2 border border-2 border-primary" />
-        </ng-container>
+        <!-- Avatar -->
+        <a [routerLink]="['/profile', user.id]" class="text-decoration-none">
+          <ng-container *ngIf="user?.pictures?.length > 0; else placeholder">
+            <img [src]="user.pictures[0]" alt="User avatar" height="50"
+              class="rounded-circle me-2 border border-2 border-primary" style="cursor: pointer;" />
+          </ng-container>
+        </a>
 
         <!-- Placeholder icon -->
         <ng-template #placeholder>
-          <i class="bi bi-person-circle fs-2 text-muted"></i>
+          <a [routerLink]="['/profile', user.id]" class="text-decoration-none text-muted">
+            <i class="bi bi-person-circle fs-2" style="cursor: pointer;"></i>
+          </a>
         </ng-template>
 
         <a routerLink="/settings" class="text-dark fs-5">

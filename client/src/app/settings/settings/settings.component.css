@@ -1,0 +1,74 @@
+.sidebar {
+    min-height: calc(100vh - 130px);
+    /* Adjust based on navbar/footer */
+}
+
+/* Badge Styles */
+.badge-btn {
+    border: 1px solid #ddd;
+    background-color: #fff3cd;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-btn.active {
+    border-width: 2px;
+    border-color: #ffc107;
+    /* Highlight color */
+    background-color: #ffeeba;
+    font-weight: bold;
+}
+
+.badge-new-friends {
+    background-color: #fff3cd;
+}
+
+.badge-short-term {
+    background-color: #ffe5d0;
+}
+
+/* Light peach */
+.badge-long-term {
+    background-color: #fce8e6;
+}
+
+/* Light pink */
+
+/* Form Control Tweaks */
+.form-control,
+.form-select {
+    background-color: #f0f0f0;
+    /* Light gray background like mock */
+    border: 1px solid #ccc;
+}
+
+.form-label {
+    text-align: right;
+    font-weight: 500;
+    color: #2c3e50;
+    padding-top: 5px;
+}
+
+/* Password Button */
+.btn-password {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: #333;
+    font-weight: bold;
+}
+
+.btn-sidebar-active {
+    background-color: #fff3cd;
+    border-left: 4px solid #f0ad4e;
+    font-weight: bold;
+}
+
+.btn-logout {
+    background-color: #d9534f;
+    color: white;
+}

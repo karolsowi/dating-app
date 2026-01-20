@@ -3,9 +3,10 @@
     <h2 class="mb-4">Your Matches</h2>
     <div class="row">
         <div *ngFor="let match of matches" class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm match-card" [routerLink]="['/messages', match.otherUser.id]">
+            <div class="card h-100 shadow-sm match-card">
                 <img [src]="match.otherUser.profilePic || 'https://via.placeholder.com/200x200?text=User'"
-                    class="card-img-top" alt="Profile">
+                    class="card-img-top" alt="Profile" style="cursor: pointer;"
+                    [routerLink]="['/profile', match.otherUser.id]">
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ match.otherUser.name }}</h5>
                     <p class="card-text text-muted">Matched on {{ match.timestamp | date }}</p>

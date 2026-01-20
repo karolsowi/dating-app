@@ -1,79 +1,33 @@
-<!-- 
-  W części "I am looking for", opcje powinny zapisywać się w danych użytkownika jako:
-  "badgeIds": [1, 2, 3] (lub inna wybrana kombinacja ofc)
+<div class="container-fluid border-top">
+  <div class="row">
+    <!-- Left Sidebar -->
+    <div class="col-md-3 col-lg-2 sidebar border-end pt-4 bg-white">
+      <h5 class="ms-3 mb-4 text-uppercase text-primaryy"
+        style="color: #2c3e50; font-weight: bold; letter-spacing: 1px;">Settings</h5>
 
-  gdzie:
-  1 = New friends
-  2 = Short-term
-  3 = Long-term
- -->
+      <div class="list-group list-group-flush">
+        <a routerLink="edit" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">Edit profile</a>
+        <a routerLink="notifications" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">Notifications</a>
+        <a routerLink="subscription" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">Subscription</a>
+        <a routerLink="general" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">General</a>
+        <a routerLink="blocked" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">Blocked accounts</a>
+        <a routerLink="help" routerLinkActive="btn-sidebar-active"
+          class="list-group-item list-group-item-action border-0 py-3">Help</a>
 
-<app-navbar></app-navbar>
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-header bg-white">
-          <h3 class="mb-0">Edit Profile</h3>
-        </div>
-        <div class="card-body">
-          <div *ngIf="successMessage" class="alert alert-success">
-            {{ successMessage }}
-          </div>
-          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" formControlName="name" />
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <label for="age" class="form-label">Age</label>
-                <input type="number" class="form-control" id="age" formControlName="age" />
-              </div>
-              <div class="col-md-4">
-                <label for="gender" class="form-label">I am a</label>
-                <select class="form-select" id="gender" formControlName="gender">
-                  <option value="male">Man</option>
-                  <option value="female">Woman</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label for="lookingFor" class="form-label">Looking for</label>
-                <select class="form-select" id="lookingFor" formControlName="lookingFor">
-                  <option value="male">Men</option>
-                  <option value="female">Women</option>
-                  <option value="everyone">Everyone</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="bio" class="form-label">Bio</label>
-              <textarea class="form-control" id="bio" rows="3" formControlName="bio"></textarea>
-            </div>
-
-            <div class="mb-3">
-              <label for="profilePic" class="form-label">Profile Picture URL</label>
-              <input
-                type="text"
-                class="form-control"
-                id="profilePic"
-                formControlName="profilePic"
-                placeholder="https://example.com/me.jpg"
-              />
-              <small class="text-muted">Enter a URL for your profile picture.</small>
-            </div>
-
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
-                Save Changes
-              </button>
-            </div>
-          </form>
+        <div class="mt-4 px-3">
+          <button (click)="onLogout()" class="btn btn-logout w-100">Log out</button>
         </div>
       </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-8 p-5">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

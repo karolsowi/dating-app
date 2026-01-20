@@ -1,0 +1,168 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid border-top">
+    <div class="row">
+        <!-- Left Sidebar -->
+        <div class="col-md-3 col-lg-2 sidebar border-end pt-4 bg-white">
+            <h5 class="ms-3 mb-4 text-uppercase text-primaryy"
+                style="color: #2c3e50; font-weight: bold; letter-spacing: 1px;">PROFILE</h5>
+
+            <div class="list-group list-group-flush">
+                <a routerLink="/settings" class="list-group-item list-group-item-action border-0 py-3">Edit profile</a>
+                <a routerLink="/settings" class="list-group-item list-group-item-action border-0 py-3">Upload media</a>
+
+                <!-- Ad Placeholder -->
+                <div class="mt-4 p-2">
+                    <img src="https://via.placeholder.com/200x400?text=Ad" class="img-fluid rounded"
+                        alt="Advertisement">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 p-4">
+            <div *ngIf="loading" class="text-center mt-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger mt-4">
+                {{ error }}
+            </div>
+
+            <div *ngIf="!loading && !error && user" class="row h-100">
+                <!-- Center Content Area (Grid) -->
+                <div class="col-lg-9">
+                    <!-- Row 1 -->
+                    <div class="row g-3 mb-3">
+                        <!-- Profile Card -->
+                        <div class="col-md-4">
+                            <div
+                                class="card shadow-sm bg-profile-card h-100 position-relative overflow-hidden border-0">
+                                <img [src]="displayPhotos[0]?.url || user.profilePic || 'https://via.placeholder.com/300'"
+                                    class="profile-cover-img" alt="{{ user.name }}">
+
+                                <div class="profile-info-overlay-box">
+                                    <h3 class="fw-bold mb-1">{{ user.name }}, {{ age }}</h3>
+                                    <p class="text-muted mb-0">{{ user.city || 'Warsaw' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gallery 1 -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm bg-gallery-card position-relative icon-container h-100"
+                                *ngIf="displayPhotos[0]?.url">
+                                <img [src]="displayPhotos[0].url" class="card-img-top gallery-img" alt="Gallery">
+                                <div
+                                    class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[0].isLiked"
+                                        (click)="onLikePhoto(0)">
+                                        <i class="bi bi-heart-fill me-0"></i>
+                                    </span>
+                                </div>
+                                <div class="edit-icon" (click)="onEditPhoto(0)">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm bg-gallery-card h-100 d-flex justify-content-center align-items-center text-muted"
+                                *ngIf="!displayPhotos[0]?.url">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
+                        </div>
+                        <!-- Gallery 2 -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm bg-gallery-card position-relative icon-container h-100"
+                                *ngIf="displayPhotos[1]?.url">
+                                <img [src]="displayPhotos[1].url" class="card-img-top gallery-img" alt="Gallery">
+                                <div
+                                    class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[1].isLiked"
+                                        (click)="onLikePhoto(1)">
+                                        <i class="bi bi-heart-fill me-0"></i>
+                                    </span>
+                                </div>
+                                <div class="edit-icon" (click)="onEditPhoto(1)">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm bg-gallery-card h-100 d-flex justify-content-center align-items-center text-muted"
+                                *ngIf="!displayPhotos[1]?.url">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="row g-3">
+                        <!-- About Me -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm bg-about-card h-100">
+                                <div class="card-header bg-transparent border-0 fw-bold pt-3 ps-3">
+                                    About me:
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ user.bio || 'No bio provided.' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gallery 3 -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm bg-gallery-card position-relative icon-container h-100"
+                                *ngIf="displayPhotos[2]?.url">
+                                <img [src]="displayPhotos[2].url" class="card-img-top gallery-img" alt="Gallery">
+                                <div
+                                    class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[2].isLiked"
+                                        (click)="onLikePhoto(2)">
+                                        <i class="bi bi-heart-fill me-0"></i>
+                                    </span>
+                                </div>
+                                <div class="edit-icon" (click)="onEditPhoto(2)">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm bg-gallery-card h-100 d-flex justify-content-center align-items-center text-muted"
+                                *ngIf="!displayPhotos[2]?.url">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
+                        </div>
+                        <!-- Gallery 4 -->
+                        <div class="col-md-4">
+                            <div class="card shadow-sm bg-gallery-card position-relative icon-container h-100"
+                                *ngIf="displayPhotos[3]?.url">
+                                <img [src]="displayPhotos[3].url" class="card-img-top gallery-img" alt="Gallery">
+                                <div
+                                    class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[3].isLiked"
+                                        (click)="onLikePhoto(3)">
+                                        <i class="bi bi-heart-fill me-0"></i>
+                                    </span>
+                                </div>
+                                <div class="edit-icon" (click)="onEditPhoto(3)">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm bg-gallery-card h-100 d-flex justify-content-center align-items-center text-muted"
+                                *ngIf="!displayPhotos[3]?.url">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (Ads) -->
+                <div class="col-lg-3 d-none d-lg-block border-start ps-4">
+                    <div class="ad-container sticky-top" style="top: 20px;">
+                        <img src="https://via.placeholder.com/300x600?text=Audible+Ad" class="img-fluid w-100"
+                            alt="Advertisement">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed-bottom bg-warning p-2 text-center text-dark fw-bold border-top border-warning">
+    GRINDING+ 30% off! Use your limited offer now! 23:44:37 left until the offer ends
+</div>
