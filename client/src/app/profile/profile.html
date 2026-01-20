@@ -38,11 +38,12 @@
                     <div class="row g-3 mb-3">
                         <!-- Profile Card -->
                         <div class="col-md-4">
-                            <div class="card shadow-sm bg-profile-card h-100">
-                                <div
-                                    class="card-body text-center d-flex flex-column justify-content-center align-items-center profile-main-card py-5">
-                                    <img [src]="user.profilePic || 'https://via.placeholder.com/150'"
-                                        class="mb-3 profile-pic-icon" alt="{{ user.name }}">
+                            <div
+                                class="card shadow-sm bg-profile-card h-100 position-relative overflow-hidden border-0">
+                                <img [src]="displayPhotos[0]?.url || user.profilePic || 'https://via.placeholder.com/300'"
+                                    class="profile-cover-img" alt="{{ user.name }}">
+
+                                <div class="profile-info-overlay-box">
                                     <h3 class="fw-bold mb-1">{{ user.name }}, {{ age }}</h3>
                                     <p class="text-muted mb-0">{{ user.city || 'Warsaw' }}</p>
                                 </div>
@@ -55,11 +56,9 @@
                                 <img [src]="displayPhotos[0].url" class="card-img-top gallery-img" alt="Gallery">
                                 <div
                                     class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
-                                    <span class="heart-icon" (click)="onLikePhoto(0)">
-                                        <i class="bi bi-heart-fill me-1"></i> {{ displayPhotos[0].likes }}
-                                    </span>
-                                    <span class="msg-icon" (click)="onShowComments(0)">
-                                        <i class="bi bi-chat-fill"></i>
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[0].isLiked"
+                                        (click)="onLikePhoto(0)">
+                                        <i class="bi bi-heart-fill me-0"></i>
                                     </span>
                                 </div>
                                 <div class="edit-icon" (click)="onEditPhoto(0)">
@@ -78,11 +77,9 @@
                                 <img [src]="displayPhotos[1].url" class="card-img-top gallery-img" alt="Gallery">
                                 <div
                                     class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
-                                    <span class="heart-icon" (click)="onLikePhoto(1)">
-                                        <i class="bi bi-heart-fill me-1"></i> {{ displayPhotos[1].likes }}
-                                    </span>
-                                    <span class="msg-icon" (click)="onShowComments(1)">
-                                        <i class="bi bi-chat-fill"></i>
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[1].isLiked"
+                                        (click)="onLikePhoto(1)">
+                                        <i class="bi bi-heart-fill me-0"></i>
                                     </span>
                                 </div>
                                 <div class="edit-icon" (click)="onEditPhoto(1)">
@@ -116,11 +113,9 @@
                                 <img [src]="displayPhotos[2].url" class="card-img-top gallery-img" alt="Gallery">
                                 <div
                                     class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
-                                    <span class="heart-icon" (click)="onLikePhoto(2)">
-                                        <i class="bi bi-heart-fill me-1"></i> {{ displayPhotos[2].likes }}
-                                    </span>
-                                    <span class="msg-icon" (click)="onShowComments(2)">
-                                        <i class="bi bi-chat-fill"></i>
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[2].isLiked"
+                                        (click)="onLikePhoto(2)">
+                                        <i class="bi bi-heart-fill me-0"></i>
                                     </span>
                                 </div>
                                 <div class="edit-icon" (click)="onEditPhoto(2)">
@@ -139,11 +134,9 @@
                                 <img [src]="displayPhotos[3].url" class="card-img-top gallery-img" alt="Gallery">
                                 <div
                                     class="card-body p-2 d-flex justify-content-start gap-3 align-items-end icons-overlay">
-                                    <span class="heart-icon" (click)="onLikePhoto(3)">
-                                        <i class="bi bi-heart-fill me-1"></i> {{ displayPhotos[3].likes }}
-                                    </span>
-                                    <span class="msg-icon" (click)="onShowComments(3)">
-                                        <i class="bi bi-chat-fill"></i>
+                                    <span class="heart-icon" [class.text-danger]="displayPhotos[3].isLiked"
+                                        (click)="onLikePhoto(3)">
+                                        <i class="bi bi-heart-fill me-0"></i>
                                     </span>
                                 </div>
                                 <div class="edit-icon" (click)="onEditPhoto(3)">

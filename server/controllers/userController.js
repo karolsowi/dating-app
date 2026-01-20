@@ -79,9 +79,24 @@ exports.getUser = (req, res) => {
   // Calculate age from dob (expected format: YYYY-MM-DD)
   const age = calculateAge(user.dob);
 
+  // Enrich with photo likes
+  const photoLikes = readData(files.photoLikes) || [];
+  const currentUserId = req.query.currentUserId; // Pass this from frontend
+
+  const picturesWithStats = (user.pictures || []).map(url => {
+    const likesForPhoto = photoLikes.filter(l => l.photoUrl === url);
+    return {
+      url,
+      likes: likesForPhoto.length,
+      isLiked: currentUserId ? likesForPhoto.some(l => l.fromUserId === currentUserId) : false
+    };
+  });
+
   res.json({
     ...user,
     age,
+    pictures: user.pictures, // Keep original array
+    minifiedPictures: picturesWithStats // Add enriched one
   });
 };
 
@@ -115,4 +130,36 @@ exports.updateProfile = (req, res) => {
   writeData(files.users, users);
 
   res.json(users[index]);
+};
+
+exports.togglePhotoLike = (req, res) => {
+  const { photoUrl, fromUserId } = req.body;
+  const { readData, writeData, files } = req.app.locals;
+
+  if (!photoUrl || !fromUserId) {
+    return res.status(400).json({ message: 'photoUrl and fromUserId are required' });
+  }
+
+  const photoLikes = readData(files.photoLikes) || [];
+
+  // Check if like exists
+  const existingIndex = photoLikes.findIndex(l => l.photoUrl === photoUrl && l.fromUserId === fromUserId);
+
+  let isLiked = false;
+  if (existingIndex > -1) {
+    // Unlike
+    photoLikes.splice(existingIndex, 1);
+    isLiked = false;
+  } else {
+    // Like
+    photoLikes.push({ photoUrl, fromUserId, timestamp: new Date().toISOString() });
+    isLiked = true;
+  }
+
+  writeData(files.photoLikes, photoLikes);
+
+  // Calculate new count
+  const count = photoLikes.filter(l => l.photoUrl === photoUrl).length;
+
+  res.json({ isLiked, count });
 };

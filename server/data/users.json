@@ -180,7 +180,13 @@
     "badgeIds": [
       2
     ],
-    "bio": "test1\ntest2"
+    "bio": "test1\ntest2",
+    "pictures": [
+      "https://randomuser.me/api/portraits/men/11.jpg",
+      "https://randomuser.me/api/portraits/men/12.jpg",
+      "https://randomuser.me/api/portraits/men/13.jpg",
+      "https://randomuser.me/api/portraits/men/14.jpg"
+    ]
   },
   {
     "id": "david",

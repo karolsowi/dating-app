@@ -63,19 +63,32 @@ export class Profile implements OnInit {
           }
           this.user = user;
 
-          // Generate mock data for photos
-          this.displayPhotos = (user.pictures || []).map((url: string) => ({
-            url: url,
-            likes: Math.floor(Math.random() * 50) + 1,
-            comments: Math.floor(Math.random() * 10),
-            description: 'Photo description...'
-          }));
+          // Use minifiedPictures from server which contains real like stats
+          if (user.minifiedPictures && user.minifiedPictures.length > 0) {
+            this.displayPhotos = user.minifiedPictures.map((item: any) => ({
+              url: item.url,
+              likes: item.likes || 0,
+              isLiked: item.isLiked || false,
+              comments: Math.floor(Math.random() * 10), // Comments still mock for now
+              description: 'Photo description...'
+            }));
+          } else {
+            // Fallback if no specific stats (should not happen with new backend)
+            this.displayPhotos = (user.pictures || []).map((url: string) => ({
+              url: url,
+              likes: 0,
+              isLiked: false,
+              comments: 0,
+              description: 'Photo description...'
+            }));
+          }
 
           // Ensure we have at least 4 placeholders if fewer photos exist (to match grid)
           while (this.displayPhotos.length < 4) {
             this.displayPhotos.push({
               url: null, // Placeholder
               likes: 0,
+              isLiked: false,
               comments: 0
             });
           }
@@ -140,8 +153,33 @@ export class Profile implements OnInit {
   }
 
   onLikePhoto(index: number) {
-    if (!this.displayPhotos[index].url) return;
-    this.displayPhotos[index].likes++;
-    // alert(`Liked! Total likes: ${this.displayPhotos[index].likes}`);
+    const photo = this.displayPhotos[index];
+    if (!photo.url) return;
+
+    // Optimistic Update
+    const originalLikes = photo.likes;
+    const originalIsLiked = photo.isLiked;
+
+    photo.isLiked = !photo.isLiked;
+    photo.likes += photo.isLiked ? 1 : -1;
+    this.cdr.detectChanges(); // Update UI immediately
+
+    this.userService.togglePhotoLike(photo.url).subscribe({
+      next: (response) => {
+        console.log('Like toggled:', response);
+        // Sync with server response to be sure
+        photo.likes = response.count;
+        photo.isLiked = response.isLiked;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Like failed', err);
+        // Revert on error
+        photo.likes = originalLikes;
+        photo.isLiked = originalIsLiked;
+        this.cdr.detectChanges();
+        alert('Failed to update like');
+      }
+    });
   }
 }
