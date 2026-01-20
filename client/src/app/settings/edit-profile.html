@@ -1,0 +1,102 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+    <!-- Bio -->
+    <div class="row mb-4">
+        <label for="bio" class="col-sm-3 col-form-label text-end">Bio</label>
+        <div class="col-sm-9">
+            <textarea class="form-control" id="bio" rows="4" formControlName="bio"></textarea>
+        </div>
+    </div>
+
+    <!-- Looking For (Badges) -->
+    <div class="row mb-4">
+        <label class="col-sm-3 col-form-label text-end">I am looking for</label>
+        <div class="col-sm-9 d-flex gap-3">
+            <div *ngFor="let badge of availableBadges" class="badge-btn px-3 py-2 rounded"
+                [ngClass]="{'active': isBadgeSelected(badge.id), 'bg-warning': isBadgeSelected(badge.id)}"
+                [style.background-color]="isBadgeSelected(badge.id) ? '' : badge.class" (click)="toggleBadge(badge.id)">
+                <span>{{ badge.emoji }}</span> {{ badge.text }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Name -->
+    <div class="row mb-4">
+        <label for="name" class="col-sm-3 col-form-label text-end">Name</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="row mb-4">
+        <label for="email" class="col-sm-3 col-form-label text-end">Email</label>
+        <div class="col-sm-9">
+            <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div class="row mb-4">
+        <label class="col-sm-3 col-form-label text-end">Password</label>
+        <div class="col-sm-9">
+            <button type="button" class="btn btn-password" (click)="onChangePassword()">Change password</button>
+        </div>
+    </div>
+
+    <!-- DOB -->
+    <div class="row mb-4">
+        <label for="dob" class="col-sm-3 col-form-label text-end">Date of birth</label>
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="dob" formControlName="dob">
+        </div>
+    </div>
+
+    <!-- Gender & Partner Preference -->
+    <div class="row mb-5 align-items-center">
+        <label class="col-sm-3 col-form-label text-end">I'm a</label>
+        <div class="col-sm-3">
+            <select class="form-select" formControlName="userGender">
+                <option value="man">Man</option>
+                <option value="woman">Woman</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="col-sm-2 text-center">interested in</div>
+        <div class="col-sm-4">
+            <!-- Simplified multi-select approximation -->
+            <select class="form-select" formControlName="partnerGender" multiple>
+                <option value="man">Men</option>
+                <option value="woman">Women</option>
+                <option value="other">Everyone</option>
+            </select>
+            <small class="text-muted d-block mt-1">Hold Ctrl to select multiple</small>
+        </div>
+    </div>
+
+    <!-- Photos -->
+    <div class="row mb-5">
+        <label class="col-sm-3 col-form-label text-end">Photos</label>
+        <div class="col-sm-9">
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <div *ngFor="let pic of user?.pictures; let i = index" class="position-relative">
+                    <img [src]="pic" class="rounded border" style="width: 100px; height: 100px; object-fit: cover;">
+                    <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 p-0"
+                        style="width: 20px; height: 20px; line-height: 1;" (click)="removePhoto(i)">×</button>
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Add photo URL" #photoInput>
+                <button class="btn btn-outline-secondary" type="button"
+                    (click)="addPhoto(photoInput.value); photoInput.value=''">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save Changes</button>
+            <p *ngIf="successMessage" class="text-success mt-2">{{ successMessage }}</p>
+        </div>
+    </div>
+</form>
