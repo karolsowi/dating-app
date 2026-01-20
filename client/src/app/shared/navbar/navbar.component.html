@@ -39,11 +39,10 @@
         </div>
 
         <!-- Avatar -->
-        <!-- Avatar -->
         <a [routerLink]="['/profile', user.id]" class="text-decoration-none">
           <ng-container *ngIf="user?.pictures?.length > 0; else placeholder">
-            <img [src]="user.pictures[0]" alt="User avatar" height="50"
-              class="rounded-circle me-2 border border-2 border-primary" style="cursor: pointer;" />
+            <img [src]="user.pictures[0]" alt="User avatar"
+              class="rounded-circle me-2 border border-2 border-primary" style="cursor: pointer; width: 50px; height: 50px; object-fit: cover;" />
           </ng-container>
         </a>
 
